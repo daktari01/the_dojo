@@ -1,5 +1,9 @@
 class Room():
-    """Class Room for people"""
-    def __init__(self, room_number, occupants):
-        self.occupants = occupants
-        self.room_number = room_number
+    """Class Room at Andela"""
+    def __init__(self, room_name):
+        self.occupants = []
+        self.room_name = room_name
+
+    def get_occupants(self):
+        """Return the number of occupants"""
+        return self.occupants

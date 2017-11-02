@@ -1,12 +1,12 @@
 import unittest
 
-from ..source.person import Person
-from ..source.fellow import Fellow
-from ..source.staff import Staff
-from ..source.room import Room
-from ..source.livingspace import LivingSpace
-from ..source.office import Office
-from ..source.dojo import Dojo
+from source.person import Person
+from source.fellow import Fellow
+from source.staff import Staff
+from source.room import Room
+from source.livingspace import LivingSpace
+from source.office import Office
+from source.dojo import Dojo
 
 
 class DojoTest(unittest.TestCase):
