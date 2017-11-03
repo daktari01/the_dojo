@@ -1,6 +1,8 @@
+import cmd
 import sys
 
 from docopt import docopt, DocoptExit
+from dojo import Dojo
 
 
 """
@@ -42,13 +44,13 @@ def the_dojo_docopt(func):
     return fn
 
 
-class TheDojo:
+class TheDojo(cmd.Cmd):
     intro = "Welcome to the_dojo program!"  \
         + "(type help for a list of commands)"
     prompt = '[dojo]> '
 
     @the_dojo_docopt
-    def do_create_room(self, argument):
+    def do_create_room(self, argument): #add elipse!!
         """
         Usage: create_room <room_type> <room_name> ...
 
@@ -57,7 +59,10 @@ class TheDojo:
             wants_accommodation     Whether person wants accommodation or not. 
                                         [default: N]
         """
-        print(argument)
+        for name in argument['<room_name>']:
+            print (Dojo().create_room(argument['<room_type>'], name))
+        # print(argument)
+        
 
     @the_dojo_docopt
     def do_add_person(self, argument):
@@ -74,5 +79,7 @@ class TheDojo:
         """Quits the_dojo"""
         exit()
 
+if __name__ == '__main__':
+    TheDojo().cmdloop()
 
 
