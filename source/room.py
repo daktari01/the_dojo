@@ -15,8 +15,9 @@ class Room():
         pass
 
     def get_occupants(self):
-        """Return the number of occupants"""
-        return self.occupants
+        """Return all occupants"""
+        for occupant in self.occupants:
+            print (occupant)
         
 class LivingSpace(Room):
     """Class LivingSpace inherits from Room"""
@@ -35,7 +36,7 @@ class LivingSpace(Room):
 
     def allocate_to_person(self, fellow):
         if len(self.occupants) < self.capacity:
-            if isinstance(fellow, Fellow) and self.wants_accommodation==True:
+            if isinstance(fellow, Fellow) and self.wants_accommodation=='Y':
                 self.occupants.append(fellow)
         return self.occupants
         
