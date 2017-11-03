@@ -1,3 +1,3 @@
 class Dojo():
-    """Class Dojo implements the logic of room allocation """
+    """Class Dojo randomly allocates rooms"""
     pass

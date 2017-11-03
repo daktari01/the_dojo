@@ -5,8 +5,8 @@ from fellow import Fellow
 class LivingSpace(Room):
     """Class LivingSpace inherits from Room"""
     capacity = 4
-    def __init__(self, room_number):
-        super().__init__(room_number)
+    def __init__(self, room_name):
+        super().__init__(room_name)
         self.occupants = []
 
     def get_room_type(self):
@@ -22,3 +22,5 @@ class LivingSpace(Room):
             if isinstance(fellow, Fellow) and self.wants_accommodation==True:
                 self.occupants.append(fellow)
         return self.occupants
+
+livings = LivingSpace('Jojo')
