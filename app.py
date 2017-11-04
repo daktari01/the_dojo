@@ -45,8 +45,27 @@ def the_dojo_docopt(func):
 
 
 class TheDojo(cmd.Cmd):
+    # Print the_dojo graphic
+    print("****** " + " **  ** " + " ****** " + "   " + "***    " + "  ****  " \
+                    + "     ** " + "  ****  ")
+    print("****** " + " **  ** " + " ****** " + "   " + "*****  " + " ****** " \
+                    + "     ** " + " ****** ")
+    print("  **   " + " **  ** " + " **     " + "   " + "**  ** " + " **  ** " \
+                    + "     ** " + " **  ** ")
+    print("  **   " + " ****** " + " *****  " + "   " + "**  ** " + " **  ** " \
+                    + "     ** " + " **  ** ") 
+    print("  **   " + " ****** " + " *****  " + "   " + "**  ** " + " **  ** " \
+                    + " **  ** " + " **  ** ")
+    print("  **   " + " **  ** " + " **     " + "   " + "**  ** " + " **  ** " \
+                    + " **  ** " + " **  ** ")
+    print("  **   " + " **  ** " + " ****** " + "   " + "*****  " + " ****** " \
+                    + " ****** " + " ****** ")
+    print("  **   " + " **  ** " + " ****** " + "   " + "***    " + "  ****  " \
+                    + "  ****  " + "  ****  ")  
+
     intro = "Welcome to the_dojo program!"  \
-        + "(type help for a list of commands)"
+        + " Type help for a list of commands"
+
     prompt = '[dojo]>> '
 
     @the_dojo_docopt
@@ -64,7 +83,7 @@ class TheDojo(cmd.Cmd):
         
 
     @the_dojo_docopt
-    def do_add_person(self, args): # remember to add <wants_accommodation>
+    def do_add_person(self, args): 
         """
         Usage: add_person <person_name> <person_type> [<wants_accommodation>]
 
@@ -72,15 +91,24 @@ class TheDojo(cmd.Cmd):
             person_name             Name of the person to be created
             wants_accommodation     Whether person wants accommodation or not. [default: N]
         """
-        if args['<wants_accommodation>'] is None:
+        if args['<person_type>'].lower() == 'staff' and args['<wants_accommodation>'].upper() == 'Y':
+            print("Staff cannot be allocated living spaces")
+        elif args['<wants_accommodation>'] is None:
             Dojo().add_person(args['<person_name>'], args['<person_type>'])
         else: 
-            Dojo().add_person(args['<person_name>'], args['<person_type>'], args['<wants_accommodation>'])
-        # ['<person_name>'], ['<person_type>'], ['<wants_accommodation>']
-        print(args)
+            Dojo().add_person(args['<person_name>'], args['<person_type>'], \
+                                 args['<wants_accommodation>'])
+
+        if args['<person_type>'].lower() == 'staff':
+            print(args['<person_name>'] + " has been added as a Staff")
+        elif args['<person_type>'].lower() == 'fellow':
+            print(args['<person_name>'] + " has been added as a Fellow")
+        else:
+            raise RuntimeError("Wrong person type entered")
 
     def do_quit(self, args):
         """Quits the_dojo"""
+        print("Thank you for using the_dojo. Goodbye!")
         exit()
 
 if __name__ == '__main__':
