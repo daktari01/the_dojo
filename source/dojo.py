@@ -28,13 +28,13 @@ class Dojo:
         else:
             raise TypeError("Only strings are allowed")
     
-    def add_person(self, person_name, person_type):
+    def add_person(self, person_name, person_type, wants_accommodation='N'):
         # person_name = args['<person_name>']
         # person_type = args['<person_type>']
         
         if person_type.upper() == 'FELLOW':
             for fellow in self.all_fellows:
-                if fellow in self.all_fellows:
+                if fellow == person_name:
                     print("Fellow already exists!")
                     return
             new_person = Fellow(person_name)
@@ -42,14 +42,14 @@ class Dojo:
             self.all_people.append(new_person)
         elif person_type.upper() == 'STAFF':
             for staff in self.all_staff:
-                if staff in self.all_staff:
+                if staff == person_name:
                     print("Staff already exists!")
                     return
-                new_person = Staff(person_name)
-                self.all_staff.append(new_person)
-                self.all_people.append(new_person)
+            new_person = Staff(person_name)
+            self.all_staff.append(new_person)
+            self.all_people.append(new_person)
         else:
-            raise RuntimeError("Wrong person type entered. Pllease try again")
+            raise RuntimeError("Wrong person type entered. Please try again")
         return self.all_people
         
        

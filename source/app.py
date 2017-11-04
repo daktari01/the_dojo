@@ -66,13 +66,16 @@ class TheDojo(cmd.Cmd):
     @the_dojo_docopt
     def do_add_person(self, args): # remember to add <wants_accommodation>
         """
-        Usage: add_person <person_name> <person_type> 
+        Usage: add_person <person_name> <person_type> [<wants_accommodation>]
 
         Options:
             person_name             Name of the person to be created
             wants_accommodation     Whether person wants accommodation or not. [default: N]
         """
-        Dojo().add_person(args['<person_name>'], args['<person_type>'])
+        if args['<wants_accommodation>'] is None:
+            Dojo().add_person(args['<person_name>'], args['<person_type>'])
+        else: 
+            Dojo().add_person(args['<person_name>'], args['<person_type>'], args['<wants_accommodation>'])
         # ['<person_name>'], ['<person_type>'], ['<wants_accommodation>']
         print(args)
 
