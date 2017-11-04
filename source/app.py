@@ -60,19 +60,21 @@ class TheDojo(cmd.Cmd):
         """
         for name in args['<room_name>']:
             Dojo().create_room(args['<room_type>'], name)
-        # print(argument)
+        print(args)
         
 
     @the_dojo_docopt
-    def do_add_person(self, args):
+    def do_add_person(self, args): # remember to add <wants_accommodation>
         """
-        Usage: add_person <person_name> <person_type> <wants_accommodation>
+        Usage: add_person <person_name> <person_type> 
 
         Options:
             person_name             Name of the person to be created
             wants_accommodation     Whether person wants accommodation or not. [default: N]
         """
-        print(Dojo().add_person(args['<person_name>'], ['<person_type>'], ['<wants_accommodation>']))
+        Dojo().add_person(args['<person_name>'], args['<person_type>'])
+        # ['<person_name>'], ['<person_type>'], ['<wants_accommodation>']
+        print(args)
 
     def do_quit(self, args):
         """Quits the_dojo"""
