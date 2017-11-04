@@ -1,5 +1,5 @@
-from room import Room, Office, LivingSpace
-from person import Person, Staff, Fellow
+from source.room import Room, Office, LivingSpace
+from source.person import Person, Staff, Fellow
 
 
 class Dojo:

@@ -1,6 +1,6 @@
 import random
 
-from person import Person, Staff, Fellow
+from source.person import Person, Staff, Fellow
 
 
 class Room():

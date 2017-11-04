@@ -2,7 +2,7 @@ import cmd
 import sys
 
 from docopt import docopt, DocoptExit
-from dojo import Dojo
+from source.dojo import Dojo
 
 
 """
