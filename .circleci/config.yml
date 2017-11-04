@@ -33,6 +33,8 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             pip install -r requirements.txt
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+            chmod +x ./cc-test-reporter
 
       - save_cache:
           paths:
@@ -44,7 +46,9 @@ jobs:
           name: run tests
           command: |
             . venv/bin/activate
+            ./cc-test-reporter before-build
             nosetests tests --with-coverage --cover-xml
+            ./cc-test-reporter after-build --exit-code $?
 
       - store_artifacts:
           path: test-reports
