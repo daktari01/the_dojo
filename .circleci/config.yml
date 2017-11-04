@@ -44,7 +44,7 @@ jobs:
           name: run tests
           command: |
             . venv/bin/activate
-            nosetests tests/
+            nosetests tests --with-coverage --cover-xml
 
       - store_artifacts:
           path: test-reports

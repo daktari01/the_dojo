@@ -86,6 +86,7 @@ celerybeat-schedule
 .venv
 venv/
 ENV/
+dojo_env/
 
 # Spyder project settings
 .spyderproject
