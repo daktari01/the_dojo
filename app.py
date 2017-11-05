@@ -24,7 +24,7 @@ Options:
 """
 def the_dojo_docopt(func):
     """
-    This decorator is used to pass the result of the docopt parsing to 
+    This decorator is used to pass the result of the docopt parsing to \
     the called action
     """
     def fn(self, args):
@@ -46,7 +46,7 @@ def the_dojo_docopt(func):
 
 class TheDojo(cmd.Cmd):
     # Print the_dojo graphic
-    '''
+    
     print("****** " + " **  ** " + " ****** " + "   " + "***    " + "  ****  " \
                     + "     ** " + "  ****  ")
     print("****** " + " **  ** " + " ****** " + "   " + "*****  " + " ****** " \
@@ -54,7 +54,7 @@ class TheDojo(cmd.Cmd):
     print("  **   " + " **  ** " + " **     " + "   " + "**  ** " + " **  ** " \
                     + "     ** " + " **  ** ")
     print("  **   " + " ****** " + " *****  " + "   " + "**  ** " + " **  ** " \
-                    + "     ** " + " **  ** ") 
+                    + "     ** " + " **  ** ")
     print("  **   " + " ****** " + " *****  " + "   " + "**  ** " + " **  ** " \
                     + " **  ** " + " **  ** ")
     print("  **   " + " **  ** " + " **     " + "   " + "**  ** " + " **  ** " \
@@ -63,7 +63,7 @@ class TheDojo(cmd.Cmd):
                     + " ****** " + " ****** ")
     print("  **   " + " **  ** " + " ****** " + "   " + "***    " + "  ****  " \
                     + "  ****  " + "  ****  ")
-    '''  
+    
 
     intro = "Welcome to the_dojo program!"  \
         + " Type help for a list of commands"
@@ -72,7 +72,7 @@ class TheDojo(cmd.Cmd):
 
 
     @the_dojo_docopt
-    def do_add_person(self, args): 
+    def do_add_person(self, args):
         """
         Usage: add_person <person_name> <person_type> [<wants_accommodation>]
 
@@ -80,20 +80,29 @@ class TheDojo(cmd.Cmd):
             person_name             Name of the person to be created
             wants_accommodation     Whether person wants accommodation or not. [default: N]
         """
-        if args['<person_type>'].lower() == 'staff' and args['<wants_accommodation>'] == 'Y':
+        if args['<person_type>'].lower() == 'staff' and args['<wants_accommodation>'] is not None:
             print("Staff cannot be allocated living spaces")
-        elif args['<wants_accommodation>'] is None:
+        elif args['<person_type>'].lower() == 'staff' and args['<wants_accommodation>'] is None:
             Dojo().add_person(args['<person_name>'], args['<person_type>'])
-        else: 
-            Dojo().add_person(args['<person_name>'], args['<person_type>'], \
-                                 args['<wants_accommodation>'])
-
-        if args['<person_type>'].lower() == 'staff':
             print(args['<person_name>'] + " has been added as a Staff")
-        elif args['<person_type>'].lower() == 'fellow':
+        elif args['<person_type>'].lower() == 'fellow' and args['<wants_accommodation>'] is None:
+            Dojo().add_person(args['<person_name>'], args['<person_type>'])
+            print(args['<person_name>'] + " has been added as a Fellow")
+        elif args['<person_type>'].lower() == 'fellow' and args['<wants_accommodation>'] == 'Y':
+            Dojo().add_person(args['<person_name>'], args['<person_type>'], args['<wants_accommodation>'])
+            print(args['<person_name>'] + " has been added as a Fellow")
+        elif args['<person_type>'].lower() == 'fellow' and args['<wants_accommodation>'] == 'y':
+            Dojo().add_person(args['<person_name>'], args['<person_type>'], args['<wants_accommodation>'])
+            print(args['<person_name>'] + " has been added as a Fellow")
+        elif args['<person_type>'].lower() == 'fellow' and args['<wants_accommodation>'] == 'N':
+            Dojo().add_person(args['<person_name>'], args['<person_type>'], args['<wants_accommodation>'])
+            print(args['<person_name>'] + " has been added as a Fellow")
+        elif args['<person_type>'].lower() == 'fellow' and args['<wants_accommodation>'] == 'n':
+            Dojo().add_person(args['<person_name>'], args['<person_type>'], args['<wants_accommodation>'])
             print(args['<person_name>'] + " has been added as a Fellow")
         else:
-            raise RuntimeError("Wrong person type entered")
+            print("Wrong inputs entered. Type 'help add_person' for help")
+
 
     @the_dojo_docopt
     def do_create_room(self, args): 
@@ -104,12 +113,12 @@ class TheDojo(cmd.Cmd):
             person_name             Name of the person to be created
             wants_accommodation     Whether person wants accommodation or not. [default: N]
         """
-        if args['<room_type>'].lower() == 'office' or args['<room_type>'] == 'living':
+        if args['<room_type>'].lower() == 'office' or args['<room_type>'].lower() == 'living':
             for name in args['<room_name>']:
                 Dojo().create_room(args['<room_type>'], name)
-            print(args)
+                print(args['<room_type>'] + " " + name + " created successfully")
         else:
-            raise RuntimeError("Wrong room type entered")
+            print("Wrong room type entered")
 
     def do_quit(self, args):
         """Quits the_dojo"""

@@ -7,13 +7,33 @@ class Dojo:
     path = './files/'
     def __init__(self):
         self.occupants = []
-        self.all_rooms = {}
-        self.rooms =[]
+        self.all_rooms = []
         self.all_people = []
         self.all_staff = []
         self.all_fellows = []
-        self.all_offices = {}
-        self.offices = []
+        self.all_offices = []
+        self.all_livings = []
+    
+    def create_room(self, room_type, room_name):
+        """Method to create rooms and allocate"""
+        new_offices = []
+        new_livings =[]
+        if isinstance(room_type, str) and isinstance(room_name, str):
+            if room_type.lower() == "office":
+                for new_office in new_offices:
+                    for office in self.all_offices:
+                        if new_office == office:
+                            print("Office already exists. Please try using a different name")
+                        else:
+                            self.all_offices.extend(new_offices)
+            elif room_type.lower() == "living":
+                for new_living in new_livings:
+                    for living in self.all_livings:
+                        if new_living == living:
+                            print("Living space already exists. Please try using a different name")
+                        else:
+                            self.all_livings.extend(new_livings)
+
 
     def add_person(self, person_name, person_type, wants_accommodation='N'):
         """Method to add person"""
@@ -32,7 +52,7 @@ class Dojo:
             self.all_fellows.append(new_person)
             self.all_people.append(new_person)
             # Get values of all fellows in fellows.txt file
-            for line in open('fellows.txt'):
+            for line in open('./files/fellows.txt'):
                 separator = ','
                 line = line.split(separator)
                 for fellow in line:
@@ -51,40 +71,18 @@ class Dojo:
             self.all_staff.append(new_person)
             self.all_people.append(new_person)
             # Get values of all staff in staff.txt file
-            for line in open('staff.txt'):
+            for line in open('./files/staff.txt'):
                 separator = ','
                 line = line.split(separator)
                 for staff in line:
                     self.all_staff.append(staff)
             # Join the all_fellows and all_staff lists to obtain all_people list
             self.all_people = self.all_fellows.extend(self.all_staff)
-            
-        else:
-            raise RuntimeError("Wrong person type entered. Please try again")
-        return self.all_people
-          
-    def create_room(self, room_types, room_name):
-        """Method to create rooms"""
-        if isinstance(room_types, str) and isinstance(room_name, str):
-            
-            if room_types in self.all_rooms:
-                print("Room name already exits!. Try another one")
-            else:
-                if room_types.lower() == 'office':
-                    new_room = Office(room_name)
-                    self.all_offices.update({room_name:self.rooms})
-                    #self.all_rooms.append(new_room.room_name)
-                    '''
-                elif room_types.lower() == 'livingspace':
-                    new_room = LivingSpace(room_name)
-                else:
-                    return "Invalid argument passed"
-                return self.all_rooms
-        else:
-            raise TypeError("Only strings are allowed")
-    '''
 
-        
+        else:
+            print("Wrong person type entered. Please try again")
+        return self.all_people
        
     
-          
+
+             
