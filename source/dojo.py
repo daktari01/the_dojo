@@ -10,7 +10,8 @@ class Dojo:
         self.all_people = []
         self.all_staff = []
         self.all_fellows = []
-        
+        self.all_offices = {}
+          
     def create_room(self, room_types, room_name):
         """Method to create rooms"""
         if isinstance(room_types, str) and isinstance(room_name, str):

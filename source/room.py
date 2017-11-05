@@ -55,6 +55,10 @@ class Office(Room):
             return True
         return False
 
+    def get_random_office(self):
+        """Returns a random office to allocate to person"""
+        
+
     def allocate_to_person(self, person):
         if len(self.occupants) < self.capacity:
             if isinstance(person, Staff) or isinstance(person, Fellow):
