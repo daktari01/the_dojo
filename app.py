@@ -46,6 +46,7 @@ def the_dojo_docopt(func):
 
 class TheDojo(cmd.Cmd):
     # Print the_dojo graphic
+    '''
     print("****** " + " **  ** " + " ****** " + "   " + "***    " + "  ****  " \
                     + "     ** " + "  ****  ")
     print("****** " + " **  ** " + " ****** " + "   " + "*****  " + " ****** " \
@@ -61,26 +62,14 @@ class TheDojo(cmd.Cmd):
     print("  **   " + " **  ** " + " ****** " + "   " + "*****  " + " ****** " \
                     + " ****** " + " ****** ")
     print("  **   " + " **  ** " + " ****** " + "   " + "***    " + "  ****  " \
-                    + "  ****  " + "  ****  ")  
+                    + "  ****  " + "  ****  ")
+    '''  
 
     intro = "Welcome to the_dojo program!"  \
         + " Type help for a list of commands"
 
     prompt = '[dojo]>> '
 
-    @the_dojo_docopt
-    def do_create_room(self, args): 
-        """
-        Usage: create_room <room_type> <room_name> ...
-
-        Options:
-            person_name             Name of the person to be created
-            wants_accommodation     Whether person wants accommodation or not. [default: N]
-        """
-        for name in args['<room_name>']:
-            Dojo().create_room(args['<room_type>'], name)
-        print(args)
-        
 
     @the_dojo_docopt
     def do_add_person(self, args): 
@@ -91,7 +80,7 @@ class TheDojo(cmd.Cmd):
             person_name             Name of the person to be created
             wants_accommodation     Whether person wants accommodation or not. [default: N]
         """
-        if args['<person_type>'].lower() == 'staff' and args['<wants_accommodation>'].upper() == 'Y':
+        if args['<person_type>'].lower() == 'staff' and args['<wants_accommodation>'] == 'Y':
             print("Staff cannot be allocated living spaces")
         elif args['<wants_accommodation>'] is None:
             Dojo().add_person(args['<person_name>'], args['<person_type>'])
@@ -105,6 +94,22 @@ class TheDojo(cmd.Cmd):
             print(args['<person_name>'] + " has been added as a Fellow")
         else:
             raise RuntimeError("Wrong person type entered")
+
+    @the_dojo_docopt
+    def do_create_room(self, args): 
+        """
+        Usage: create_room <room_type> <room_name> ...
+
+        Options:
+            person_name             Name of the person to be created
+            wants_accommodation     Whether person wants accommodation or not. [default: N]
+        """
+        if args['<room_type>'].lower() == 'office' or args['<room_type>'] == 'living':
+            for name in args['<room_name>']:
+                Dojo().create_room(args['<room_type>'], name)
+            print(args)
+        else:
+            raise RuntimeError("Wrong room type entered")
 
     def do_quit(self, args):
         """Quits the_dojo"""
