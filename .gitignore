@@ -102,3 +102,4 @@ dojo_env/
 .mypy_cache/
 
 .vscode/
+*.pyc

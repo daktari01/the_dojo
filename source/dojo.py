@@ -18,6 +18,8 @@ class Dojo:
         """Method to create rooms and allocate"""
         new_offices = []
         new_livings =[]
+        office_path = './files/offices.txt'
+        living_path = './files/livings.txt'
         if isinstance(room_type, str) and isinstance(room_name, str):
             if room_type.lower() == "office":
                 for new_office in new_offices:
@@ -25,14 +27,31 @@ class Dojo:
                         if new_office == office:
                             print("Office already exists. Please try using a different name")
                         else:
-                            self.all_offices.extend(new_offices)
+                            new_office = Office(room_name)
+                            #self.all_offices.extend(new_offices)
+                            # Write all new offices to offices.txt
+                            office_file = open(office_path, 'a')
+                            office_file.write(room_name + '\n')
+                            office_file.close()
+
             elif room_type.lower() == "living":
                 for new_living in new_livings:
                     for living in self.all_livings:
                         if new_living == living:
                             print("Living space already exists. Please try using a different name")
                         else:
+                            # Write all new livings to livings.txt
+                            try:
+                                living_file = open(living_path, 'a')
+                                living_file.write(room_name + '\n')
+                                living_file.close()
+                                new_living = LivingSpace(room_name)
+                                #self.all_livings.extend(new_livings)
+                            except:
+                                raise IOError("Unable to write to file")
+                            new_living = LivingSpace(room_name)
                             self.all_livings.extend(new_livings)
+                            
 
 
     def add_person(self, person_name, person_type, wants_accommodation='N'):
@@ -82,7 +101,4 @@ class Dojo:
         else:
             print("Wrong person type entered. Please try again")
         return self.all_people
-       
-    
-
-             
+                   

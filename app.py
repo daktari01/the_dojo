@@ -46,7 +46,7 @@ def the_dojo_docopt(func):
 
 class TheDojo(cmd.Cmd):
     # Print the_dojo graphic
-    
+    '''
     print("****** " + " **  ** " + " ****** " + "   " + "***    " + "  ****  " \
                     + "     ** " + "  ****  ")
     print("****** " + " **  ** " + " ****** " + "   " + "*****  " + " ****** " \
@@ -63,7 +63,7 @@ class TheDojo(cmd.Cmd):
                     + " ****** " + " ****** ")
     print("  **   " + " **  ** " + " ****** " + "   " + "***    " + "  ****  " \
                     + "  ****  " + "  ****  ")
-    
+    '''
 
     intro = "Welcome to the_dojo program!"  \
         + " Type help for a list of commands"
