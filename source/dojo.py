@@ -13,6 +13,8 @@ class Dojo:
         self.all_fellows = []
         self.all_offices = []
         self.all_livings = []
+        self.dict_livings = {}
+        self.dict_offices = {}
     
     def create_room(self, room_type, room_name):
         """Method to create rooms and allocate"""
@@ -20,42 +22,49 @@ class Dojo:
         new_livings =[]
         office_path = './files/offices.txt'
         living_path = './files/livings.txt'
-        if isinstance(room_type, str) and isinstance(room_name, str):
-            if room_type.lower() == "office":
-                for new_office in new_offices:
-                    for office in self.all_offices:
-                        if new_office == office:
-                            print("Office already exists. Please try using a different name")
-                        else:
-                            new_office = Office(room_name)
-                            #self.all_offices.extend(new_offices)
-                            # Write all new offices to offices.txt
-                            office_file = open(office_path, 'a')
-                            office_file.write(room_name + '\n')
-                            office_file.close()
 
-            elif room_type.lower() == "living":
-                for new_living in new_livings:
-                    for living in self.all_livings:
-                        if new_living == living:
-                            print("Living space already exists. Please try using a different name")
-                        else:
-                            # Write all new livings to livings.txt
-                            try:
-                                living_file = open(living_path, 'a')
-                                living_file.write(room_name + '\n')
-                                living_file.close()
-                                new_living = LivingSpace(room_name)
-                                #self.all_livings.extend(new_livings)
-                            except:
-                                raise IOError("Unable to write to file")
-                            new_living = LivingSpace(room_name)
-                            self.all_livings.extend(new_livings)
-                            
+        if room_type.lower() == "office":
+            for office in self.all_offices:
+                if office == room_name:
+                    print("Office already exists. Please try using a different name")
+                    return
+            office_file = open(office_path, 'a')
+            office_file.write(room_name + '\n')
+            office_file.close() 
+            new_office = Office(room_name)
+            # Get a list of all offices 
+            if len(self.all_offices) > 0:
+                for office in self.all_offices:
+                    self.dict_offices = {[office]:[]}
+            else:
+                print(self.all_offices)
+        
+        elif room_type.lower() == "living":
+            for living in self.all_livings:
+                if living == room_name:
+                    print("Living space already exists. Please try using a different name")
+                    return
+            living_file = open(living_path, 'a')
+            living_file.write(room_name + '\n')
+            living_file.close() 
+            new_living = LivingSpace(room_name)
+            #Remember to sort the duplicate living thingie
+            # Get a list of all living spaces
+            '''
+            if len(self.all_livings) > 0:
+                for living in self.all_livings:
+                    self.dict_livings = {[living]:[]}
+            else:
+                print("The list is empty")
+            '''
+            for living in self.all_livings:
+                self.dict_livings = {[living]:[]}
+                print(self.dict_livings)
+
 
 
     def add_person(self, person_name, person_type, wants_accommodation='N'):
-        """Method to add person"""
+        """Method to add person and allocate room"""
         staff_path = './files/staff.txt'
         fellow_path = './files/fellows.txt'
         if person_type.upper() == 'FELLOW':
@@ -71,11 +80,7 @@ class Dojo:
             self.all_fellows.append(new_person)
             self.all_people.append(new_person)
             # Get values of all fellows in fellows.txt file
-            for line in open('./files/fellows.txt'):
-                separator = ','
-                line = line.split(separator)
-                for fellow in line:
-                    self.all_fellows.append(fellow)
+            self.all_fellows = self.file_to_list_converter('./files/fellows.txt')
 
         elif person_type.upper() == 'STAFF':
             for staff in self.all_staff:
@@ -90,15 +95,36 @@ class Dojo:
             self.all_staff.append(new_person)
             self.all_people.append(new_person)
             # Get values of all staff in staff.txt file
-            for line in open('./files/staff.txt'):
-                separator = ','
-                line = line.split(separator)
-                for staff in line:
-                    self.all_staff.append(staff)
+            self.all_staff = self.file_to_list_converter('./files/staff.txt')
             # Join the all_fellows and all_staff lists to obtain all_people list
             self.all_people = self.all_fellows.extend(self.all_staff)
 
         else:
             print("Wrong person type entered. Please try again")
         return self.all_people
+
+    def file_to_list_converter(self, afile):
+        """Reads a file and returns a list based on the file contents"""
+        
+        alist = []
+        '''
+        try:
+            for line in open(afile):
+                separator = ','
+                line = line.split(separator)
+                for item in alist:
+                    alist.append(item)
+            return set(alist)
+        except:
+            raise IOError("File not found")
+        '''
+        file_ = open(afile, 'r')
+        alist = file_.readlines()
+        alist = [i.replace('\n','') for i in alist]
+        return alist
+
+    def room_picker(self, dict_):
+        """Gets a random room with space"""
+        pass
+
                    

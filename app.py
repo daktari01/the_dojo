@@ -120,12 +120,10 @@ class TheDojo(cmd.Cmd):
         else:
             print("Wrong room type entered")
 
-    def do_quit(self, args):
+    def do_quit(self):
         """Quits the_dojo"""
         print("Thank you for using the_dojo. Goodbye!")
         exit()
 
 if __name__ == '__main__':
     TheDojo().cmdloop()
-
-

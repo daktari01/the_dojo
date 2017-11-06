@@ -15,5 +15,5 @@ class Fellow(Person):
         super().__init__(person_name)
         self.wants_accommodation = wants_accommodation
     
-jambo = Person("Mutai")
+#jambo = Person("Mutai")
     
