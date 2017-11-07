@@ -32,6 +32,7 @@ class Dojo:
             office_file.write(room_name + '\n')
             office_file.close() 
             new_office = Office(room_name)
+             #Remember to sort the duplicate living thingie
             # Get a list of all offices
             self.all_offices = self.file_to_list_converter(office_path)
             self.all_offices = set(self.all_offices)
@@ -62,8 +63,6 @@ class Dojo:
                 print("The list is empty")
             print(self.dict_livings)
             
-
-
     def add_person(self, person_name, person_type, wants_accommodation='N'):
         """Method to add person and allocate room"""
         staff_path = './files/staff.txt'

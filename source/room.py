@@ -1,6 +1,7 @@
 import random
 
 from source.person import Person, Staff, Fellow
+from source.dojo import Dojo
 
 
 class Room():
@@ -9,15 +10,30 @@ class Room():
     def __init__(self, room_name):
         self.occupants = []
         self.room_name = room_name
-        
-    def get_random_room(self, random_room):
-        """Method to get a random room"""
-        pass
 
     def get_occupants(self):
         """Return all occupants"""
         for occupant in self.occupants:
             print (occupant)
+
+    def get_random_room(self, room_dict, room_capacity):
+        """Returns a random room that has available space"""
+        # Pick a random key from the dictionary
+        random_key = random.choice(list(room_dict))
+
+        while room_capacity == len(room_dict[random_key]):
+            random_key = random.choice(list(room_dict))
+        return random_key
+
+
+        def allocate_office(self, person_name, person_type):
+            """Allocates an office to a person"""
+            # Get a random office that has space
+            office_capacity = 6
+            available_office = self.get_random_room(self.dict_offices, office_capacity)
+            available_office.append(person_name)
+            return available_office 
+        
         
 class LivingSpace(Room):
     """Class LivingSpace inherits from Room"""
@@ -34,11 +50,6 @@ class LivingSpace(Room):
             return True
         return False
 
-    def allocate_to_person(self, fellow):
-        if len(self.occupants) < self.capacity:
-            if isinstance(fellow, Fellow) and self.wants_accommodation=='Y':
-                self.occupants.append(fellow)
-        return self.occupants
         
 class Office(Room):
     """Class Office inherits from Room"""
@@ -54,13 +65,3 @@ class Office(Room):
         if self.capacity == len(self.occupants):
             return True
         return False
-
-    def get_random_office(self):
-        """Returns a random office to allocate to person"""
-        
-
-    def allocate_to_person(self, person):
-        if len(self.occupants) < self.capacity:
-            if isinstance(person, Staff) or isinstance(person, Fellow):
-                self.occupants.append(person)
-        return self.occupants

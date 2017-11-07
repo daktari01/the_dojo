@@ -1,23 +1,40 @@
+import random
 
-fileA = 'fellows_trial.txt'
-def file_to_list_converter(afile):
-        """Reads a file and returns a list based on the file contents"""
-        alist = []
-        try:
-            file_ = open(afile, 'r')
-            alist = file_.readlines()
-            alist = [i.replace('\n','') for i in alist]
-            file_.close()
-        except:
-            raise IOError("File not found")
-        alist = list(set(alist))
-        return alist
+room_capacity = 6
 
-list_ = list(file_to_list_converter(fileA))
-print(list_)
-'''
-f = open('fellows_trial.txt', 'r')
-x = f.readlines()
-x = [i.replace('\n','') for i in x]
-print(x)
-'''
+room_dict = {
+    'red':['Odhiambo', 'Okumu', 'Okiya', 'Nyagem', 'Atiende', 'Onyi'],
+    'blue':['Odhiambo', 'Okumu', 'Okiya', 'Nyagem'],
+    'orange':['Odhiambo', 'Okumu', 'Okiya', 'Nyagem', 'Onyi'],
+    'green':['Odhiambo', 'Okumu', 'Okiya', 'Nyagem', 'Onyi'],
+    'purple':['Odhiambo', 'Okumu'],
+    'cyan':['Odhiambo', 'Okumu', 'Okiya', 'Nyagem', 'Atiende', 'Onyi']
+}
+
+def get_random_room(room_dict, room_capacity):
+
+    """Returns a random room that has available space"""
+    # Pick a random key from the dictionary
+    
+    random_key = random.choice(list(room_dict))
+
+    while room_capacity == len(room_dict[random_key]):
+        random_key = random.choice(list(room_dict))
+    return random_key
+    
+    
+
+#print(get_random_room(room_dict, room_capacity))
+#room_dict[random_key].append('Kenyaa')
+room_to_add_to = get_random_room(room_dict, room_capacity)
+room_dict[room_to_add_to].append('NYOFUUUUUUU')
+#print(room_dict)
+room_dict[room_to_add_to].append('PAKAAAAA')
+#print(room_dict)
+room_dict[room_to_add_to].append('KWENDAAAA')
+room_dict[room_to_add_to].append('KWUNGUUU')
+room_dict[room_to_add_to].append('KOPLUUU')
+room_dict[room_to_add_to].append('KAKAAAAA')
+print(room_dict)
+#print(room_dict['red'])
+#print(len(room_dict['red']))
