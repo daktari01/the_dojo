@@ -103,3 +103,4 @@ dojo_env/
 
 .vscode/
 *.pyc
+trial.py
