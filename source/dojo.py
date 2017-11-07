@@ -32,12 +32,15 @@ class Dojo:
             office_file.write(room_name + '\n')
             office_file.close() 
             new_office = Office(room_name)
-            # Get a list of all offices 
+            # Get a list of all offices
+            self.all_offices = self.file_to_list_converter(office_path)
+            self.all_offices = set(self.all_offices)
+            # Read file and create a dictionary of offices
             if len(self.all_offices) > 0:
-                for office in self.all_offices:
-                    self.dict_offices = {[office]:[]}
+                self.dict_offices = dict.fromkeys(self.all_offices, [])
             else:
-                print(self.all_offices)
+                print("The list is empty")
+            print(self.dict_offices)
         
         elif room_type.lower() == "living":
             for living in self.all_livings:
@@ -50,17 +53,15 @@ class Dojo:
             new_living = LivingSpace(room_name)
             #Remember to sort the duplicate living thingie
             # Get a list of all living spaces
-            '''
+            self.all_livings = self.file_to_list_converter(living_path)
+            self.all_livings = set(self.all_livings)
+            # Read file and create a dictionary of living spaces
             if len(self.all_livings) > 0:
-                for living in self.all_livings:
-                    self.dict_livings = {[living]:[]}
+                self.dict_livings = dict.fromkeys(self.all_livings, [])
             else:
                 print("The list is empty")
-            '''
-            for living in self.all_livings:
-                self.dict_livings = {[living]:[]}
-                print(self.dict_livings)
-
+            print(self.dict_livings)
+            
 
 
     def add_person(self, person_name, person_type, wants_accommodation='N'):
@@ -81,6 +82,7 @@ class Dojo:
             self.all_people.append(new_person)
             # Get values of all fellows in fellows.txt file
             self.all_fellows = self.file_to_list_converter('./files/fellows.txt')
+            print(self.all_fellows)
 
         elif person_type.upper() == 'STAFF':
             for staff in self.all_staff:
@@ -96,32 +98,22 @@ class Dojo:
             self.all_people.append(new_person)
             # Get values of all staff in staff.txt file
             self.all_staff = self.file_to_list_converter('./files/staff.txt')
-            # Join the all_fellows and all_staff lists to obtain all_people list
-            self.all_people = self.all_fellows.extend(self.all_staff)
-
+            print(self.all_staff)    
         else:
             print("Wrong person type entered. Please try again")
-        return self.all_people
 
     def file_to_list_converter(self, afile):
         """Reads a file and returns a list based on the file contents"""
-        
         alist = []
-        '''
         try:
-            for line in open(afile):
-                separator = ','
-                line = line.split(separator)
-                for item in alist:
-                    alist.append(item)
-            return set(alist)
+            file_ = open(afile, 'r')
+            alist = file_.readlines()
+            alist = [i.replace('\n','') for i in alist]
+            file_.close()
         except:
             raise IOError("File not found")
-        '''
-        file_ = open(afile, 'r')
-        alist = file_.readlines()
-        alist = [i.replace('\n','') for i in alist]
-        return alist
+        aset = set(alist)
+        return aset
 
     def room_picker(self, dict_):
         """Gets a random room with space"""

@@ -11,3 +11,7 @@ kapa
 mumu
 chichi
 choki
+ihub
+nambale
+chemoff
+phycoff
