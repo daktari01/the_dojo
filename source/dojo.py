@@ -1,3 +1,5 @@
+import random
+
 from source.room import Room, Office, LivingSpace
 from source.person import Person, Staff, Fellow
 
@@ -114,8 +116,21 @@ class Dojo:
         aset = set(alist)
         return aset
 
-    def room_picker(self, dict_):
-        """Gets a random room with space"""
-        pass
+    def get_random_room(self, room_dict, room_capacity):
+        """Returns a random room that has available space"""
+        # Pick a random key from the dictionary
+        random_key = random.choice(list(room_dict))
+
+        while room_capacity == len(room_dict[random_key]):
+            random_key = random.choice(list(room_dict))
+        return random_key 
+
+    def allocate_room(self, person_name, person_type):
+            """Allocates an office to a person"""
+            # Get a random office that has space
+            office_capacity = 6
+            available_office = self.get_random_room(self.dict_offices, office_capacity)
+            available_office.append(person_name)
+            return available_office
 
                    
