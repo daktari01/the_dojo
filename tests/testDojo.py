@@ -47,6 +47,16 @@ class DojoTest(unittest.TestCase):
         """Test the type of class object"""
         living3 = LivingSpace('room4')
         self.assertTrue(isinstance(living3, LivingSpace))
+    '''
+    def test_create_room_successfully(self):
+        my_class_instance = Dojo()
+        initial_room_count = len(my_class_instance.all_offices)
+        blue_office = my_class_instance.create_room("office", "Cyan")
+        #self.assertTrue(blue_office)
+        new_room_count = len(my_class_instance.all_offices)
+        self.assertEqual(new_room_count - initial_room_count, 1)
+    '''
+    
 
 
 if __name__ == '__main__':
