@@ -15,9 +15,23 @@ class Dojo:
         self.all_fellows = []
         self.all_offices = []
         self.all_livings = []
+        self.all_pple_unallocated_office = []
+        self.all_allocated_office = []
+        self.fellows_want_living_unallocated = []
+        self.fellows_living_allocated = []
         self.dict_livings = {}
         self.dict_offices = {}
     
+    def get_random_room(self, room_dict, room_capacity):
+        """Returns a random room that has available space"""
+        # Pick a random key from the dictionary
+        random_key = random.choice(list(room_dict))
+
+        while room_capacity == len(room_dict[random_key]):
+            random_key = random.choice(list(room_dict))
+        return random_key
+
+
     def create_room(self, room_type, room_name):
         """Method to create rooms and allocate"""
         new_offices = []
@@ -39,6 +53,7 @@ class Dojo:
             self.all_offices = self.file_to_list_converter(office_path)
             self.all_offices = set(self.all_offices)
             # Read file and create a dictionary of offices
+            
             if len(self.all_offices) > 0:
                 self.dict_offices = dict.fromkeys(self.all_offices, [])
             else:
@@ -57,7 +72,7 @@ class Dojo:
             #Remember to sort the duplicate living thingie
             # Get a list of all living spaces
             self.all_livings = self.file_to_list_converter(living_path)
-            self.all_livings = set(self.all_livings)
+            #self.all_livings = set(self.all_livings)
             # Read file and create a dictionary of living spaces
             if len(self.all_livings) > 0:
                 self.dict_livings = dict.fromkeys(self.all_livings, [])
@@ -67,8 +82,11 @@ class Dojo:
             
     def add_person(self, person_name, person_type, wants_accommodation='N'):
         """Method to add person and allocate room"""
+
         staff_path = './files/staff.txt'
         fellow_path = './files/fellows.txt'
+        all_people_path = './files/all_people.txt'
+        all_pple_unallocated_office_path = './files/all_pple_unallocated_office.txt'
         if person_type.upper() == 'FELLOW':
             for fellow in self.all_fellows:
                 if fellow == person_name:
@@ -83,7 +101,15 @@ class Dojo:
             self.all_people.append(new_person)
             # Get values of all fellows in fellows.txt file
             self.all_fellows = self.file_to_list_converter('./files/fellows.txt')
+            print("Fellows at Andela are: \n")
             print(self.all_fellows)
+
+            #create unallocated_office.txt 
+            all_pple_unallocated_office_file = open(all_pple_unallocated_office_path, 'a')
+            all_pple_unallocated_office_file.write(person_name + '\n')
+            all_pple_unallocated_office_file.close()
+            self.all_pple_unallocated_office.append(new_person)
+            
 
         elif person_type.upper() == 'STAFF':
             for staff in self.all_staff:
@@ -99,9 +125,43 @@ class Dojo:
             self.all_people.append(new_person)
             # Get values of all staff in staff.txt file
             self.all_staff = self.file_to_list_converter('./files/staff.txt')
-            print(self.all_staff)    
+            #print("Staff at Andela are: \n")
+            print(self.all_staff)
+
+            # Create all_pple_unallocated_office.txt 
+            all_pple_unallocated_office_file = open(all_pple_unallocated_office_path, 'a')
+            all_pple_unallocated_office_file.write(person_name + '\n')
+            all_pple_unallocated_office_file.close()
+            self.all_pple_unallocated_office.append(new_person)
+
+            
         else:
             print("Wrong person type entered. Please try again")
+
+        # Add people from fellow.txt file and staff.txt to get all_people.txt
+        filenames = [fellow_path, staff_path]
+        with open(all_people_path, 'w') as all_people_file:
+            for fname in filenames:
+                with open(fname) as infile:
+                    for line in infile:
+                        all_people_file.write(line)
+        all_people_file.close()
+
+        '''
+        # Allocate person office
+        office_capacity = 6
+        available_office = self.get_random_room(self.dict_offices, office_capacity)
+        self.all_livings = self.file_to_list_converter('./files/livings.txt')
+        if len(self.all_livings) > 0:
+            self.dict_livings = dict.fromkeys(self.all_livings, [])
+        else:
+            print("The list is empty")
+        print(self.dict_livings)
+        
+        available_office.append(person_name)
+        print(person_name + " + has been allocated office :" + available_office)
+        '''
+         
 
     def file_to_list_converter(self, afile):
         """Reads a file and returns a list based on the file contents"""
@@ -114,19 +174,11 @@ class Dojo:
         except:
             raise IOError("File not found")
         aset = set(alist)
-        return aset
-
-    def get_random_room(self, room_dict, room_capacity):
-        """Returns a random room that has available space"""
-        # Pick a random key from the dictionary
-        random_key = random.choice(list(room_dict))
-
-        while room_capacity == len(room_dict[random_key]):
-            random_key = random.choice(list(room_dict))
-        return random_key 
+        aset = list(aset)
+        return aset 
 
     def allocate_room(self, person_name, person_type):
-            """Allocates an office to a person"""
+            """Allocates a room to a person"""
             # Get a random office that has space
             office_capacity = 6
             available_office = self.get_random_room(self.dict_offices, office_capacity)
