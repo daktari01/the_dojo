@@ -1,40 +1,40 @@
 import random
 
-room_capacity = 6
+def get_random_room(room_dict, room_capacity):
+        """Returns a random room that has available space"""
+        # Pick a random key from the dictionary
+        random_key = random.choice(list(room_dict))
 
-room_dict = {
-    'red':['Odhiambo', 'Okumu', 'Okiya', 'Nyagem', 'Atiende', 'Onyi'],
-    'blue':['Odhiambo', 'Okumu', 'Okiya', 'Nyagem'],
-    'orange':['Odhiambo', 'Okumu', 'Okiya', 'Nyagem', 'Onyi'],
-    'green':['Odhiambo', 'Okumu', 'Okiya', 'Nyagem', 'Onyi'],
-    'purple':['Odhiambo', 'Okumu'],
-    'cyan':['Odhiambo', 'Okumu', 'Okiya', 'Nyagem', 'Atiende', 'Onyi']
+        while room_capacity == len(room_dict[random_key]):
+            random_key = random.choice(list(room_dict))
+        return random_key
+
+
+dict_A = {
+    'red':[],
+    'blue':[],
+    'cyan':[],
+    'magenta':[]
 }
 
-def get_random_room(room_dict, room_capacity):
+print(dict_A)
+chosen_room = get_random_room(dict_A, 4)
+print(chosen_room)
 
-    """Returns a random room that has available space"""
-    # Pick a random key from the dictionary
-    
-    random_key = random.choice(list(room_dict))
+if len(dict_A[chosen_room]) > 4:
+    chosen_room = get_random_room(dict_A, 4)
 
-    while room_capacity == len(room_dict[random_key]):
-        random_key = random.choice(list(room_dict))
-    return random_key
-    
-    
-
-#print(get_random_room(room_dict, room_capacity))
-#room_dict[random_key].append('Kenyaa')
-room_to_add_to = get_random_room(room_dict, room_capacity)
-room_dict[room_to_add_to].append('NYOFUUUUUUU')
-#print(room_dict)
-room_dict[room_to_add_to].append('PAKAAAAA')
-#print(room_dict)
-room_dict[room_to_add_to].append('KWENDAAAA')
-room_dict[room_to_add_to].append('KWUNGUUU')
-room_dict[room_to_add_to].append('KOPLUUU')
-room_dict[room_to_add_to].append('KAKAAAAA')
-print(room_dict)
-#print(room_dict['red'])
-#print(len(room_dict['red']))
+dict_A[chosen_room].append('Boy')
+print(dict_A)
+dict_A[chosen_room].append('Girl')
+print(dict_A)
+dict_A[chosen_room].append('Papa')
+print(dict_A)
+dict_A[chosen_room].append('Mama')
+print(dict_A)
+if len(dict_A[chosen_room]) > 4:
+    chosen_room = get_random_room(dict_A, 4)
+dict_A[chosen_room].append('Grandma')
+print(dict_A)
+dict_A[chosen_room].append('Grandpa')
+print(dict_A)

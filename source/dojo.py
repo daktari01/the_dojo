@@ -27,7 +27,6 @@ class Dojo:
         """Returns a random room that has available space"""
         # Pick a random key from the dictionary
         random_key = random.choice(list(room_dict))
-
         while room_capacity == len(room_dict[random_key]):
             random_key = random.choice(list(room_dict))
         return random_key
@@ -54,7 +53,6 @@ class Dojo:
              #Remember to sort the duplicate living thingie
             # Get a list of all offices
             self.all_offices = self.file_to_list_converter(office_path)
-            #self.all_offices = set(self.all_offices)
             # Read file and create a dictionary of offices
             
             if len(self.all_offices) > 0:
@@ -106,20 +104,37 @@ class Dojo:
             self.all_fellows.append(new_person)
             self.all_people.append(new_person)
             
-            #create unallocated_office.txt 
+            # Create unallocated_office.txt 
             all_pple_unallocated_office_file = open(all_pple_unallocated_office_path, 'a')
             all_pple_unallocated_office_file.write(person_name + '\n')
             all_pple_unallocated_office_file.close()
 
+            # Generate dictionary from list of offices
             if len(self.all_offices) > 0:
-                self.dict_offices = dict.fromkeys(self.all_offices, [])
+                #self.dict_offices = dict.fromkeys(self.all_offices, [])
+                keys = self.all_offices
+                value = []
+                self.dict_offices = {key: list(value) for key in keys}
             else:
                 print("The list is empty")
-
-            #print(self.dict_offices)
+            # Allocate office to fellows
             available_office = self.get_random_room(self.dict_offices, 6)
+            self.dict_offices[available_office].append(person_name)
             print(person_name + " has been allocated office " + available_office)
+            print(self.dict_offices)
+            # Write the self.dict_offices to a file and instantiate self.dict_offices 
+            # to read from that file
+            '''
+            # Allocate living rooms to fellows
+            if wants_accommodation == 'Y' or wants_accommodation == 'y':
+                if len(self.all_livings) > 0:
+                    self.dict_livings = dict.fromkeys(self.all_livings, [])
+                else:
+                    print("The list is empty")
+            '''
 
+
+            '''
             # Remove person from unallocated list
             file_allocated = open('./files/all_pple_unallocated_office.txt', 'r')
             allocated_lines = file_allocated.readlines
@@ -129,6 +144,7 @@ class Dojo:
                 if line != person_name + "\n":
                     file_allocated.write(line)
             file_allocated.close()
+            '''
             # ##remember to compare len(dict[person_name]) to be less than 6 before allocating. 
             # If it is >= 6, pick another random room 
             # ##add the person to allocated list
@@ -152,12 +168,6 @@ class Dojo:
             #print("Staff at Andela are: \n")
             print(self.all_staff)
 
-            # Create all_pple_unallocated_office.txt 
-            all_pple_unallocated_office_file = open(all_pple_unallocated_office_path, 'a')
-            all_pple_unallocated_office_file.write(person_name + '\n')
-            all_pple_unallocated_office_file.close()
-            self.all_pple_unallocated_office.append(new_person)
-
             
         else:
             print("Wrong person type entered. Please try again")
@@ -170,22 +180,6 @@ class Dojo:
                     for line in infile:
                         all_people_file.write(line)
         all_people_file.close()
-
-        '''
-        # Allocate person office
-        office_capacity = 6
-        available_office = self.get_random_room(self.dict_offices, office_capacity)
-        self.all_livings = self.file_to_list_converter('./files/livings.txt')
-        if len(self.all_livings) > 0:
-            self.dict_livings = dict.fromkeys(self.all_livings, [])
-        else:
-            print("The list is empty")
-        print(self.dict_livings)
-        
-        available_office.append(person_name)
-        print(person_name + " + has been allocated office :" + available_office)
-        '''
-         
 
     def file_to_list_converter(self, afile):
         """Reads a file and returns a list based on the file contents"""
