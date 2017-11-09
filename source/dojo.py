@@ -105,6 +105,7 @@ class Dojo:
             fellow_file.close()
             self.all_fellows.append(new_person)
             self.all_people.append(new_person)
+            print(person_name + " has been added as a Fellow")
             
             # Create unallocated_office.txt 
             all_pple_unallocated_office_file = open(all_pple_unallocated_office_path, 'a')

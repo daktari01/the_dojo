@@ -7,6 +7,8 @@ from source.dojo import Dojo
 
 class DojoTest(unittest.TestCase):
     """Test the dojo module"""
+    def setUp(self):
+        self.Dojo = Dojo()
     
     def test_person_instance(self):
         """Test instance of class Person"""
@@ -47,15 +49,21 @@ class DojoTest(unittest.TestCase):
         """Test the type of class object"""
         living3 = LivingSpace('room4')
         self.assertTrue(isinstance(living3, LivingSpace))
-    '''
+    
     def test_create_room_successfully(self):
-        my_class_instance = Dojo()
-        initial_room_count = len(my_class_instance.all_offices)
-        blue_office = my_class_instance.create_room("office", "Cyan")
+        initial_room_count = len(self.Dojo.all_offices)
+        blue_office = self.Dojo.create_room("office", "Turquoise")
         #self.assertTrue(blue_office)
-        new_room_count = len(my_class_instance.all_offices)
+        new_room_count = len(self.Dojo.all_offices)
         self.assertEqual(new_room_count - initial_room_count, 1)
-    '''
+        #delete Dojo instance in teardoe
+        
+    def test_cannot_create_office(self):
+        blue_office = self.Dojo.create_room("office", "Grey")
+        blue_office_dup = self.Dojo.create_room("office", "Grey")
+        self.assertEqual("Office already exists. Please try using a different name", blue_office_dup)
+        
+    
     
 
 

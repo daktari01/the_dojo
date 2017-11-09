@@ -46,7 +46,7 @@ def the_dojo_docopt(func):
 
 class TheDojo(cmd.Cmd):
     # Print the_dojo graphic
-    '''
+    
     print("****** " + " **  ** " + " ****** " + "   " + "***    " + "  ****  " \
                     + "     ** " + "  ****  ")
     print("****** " + " **  ** " + " ****** " + "   " + "*****  " + " ****** " \
@@ -63,7 +63,7 @@ class TheDojo(cmd.Cmd):
                     + " ****** " + " ****** ")
     print("  **   " + " **  ** " + " ****** " + "   " + "***    " + "  ****  " \
                     + "  ****  " + "  ****  ")
-    '''
+    
 
     intro = "Welcome to the_dojo program!"  \
         + " Type help for a list of commands"
@@ -86,22 +86,22 @@ class TheDojo(cmd.Cmd):
             print("Staff cannot be allocated living spaces")
         elif args['<person_type>'].lower() == 'staff' and args['<wants_accommodation>'] is None:
             Dojo().add_person(person_name, args['<person_type>'])
-            print(person_name + " has been added as a Staff")
+            #print(person_name + " has been added as a Staff")
         elif args['<person_type>'].lower() == 'fellow' and args['<wants_accommodation>'] is None:
             Dojo().add_person(person_name, args['<person_type>'])
-            print(person_name + " has been added as a Fellow")
+            #print(person_name + " has been added as a Fellow")
         elif args['<person_type>'].lower() == 'fellow' and args['<wants_accommodation>'] == 'Y':
             Dojo().add_person(person_name, args['<person_type>'], args['<wants_accommodation>'])
-            print(person_name + " has been added as a Fellow")
+            #print(person_name + " has been added as a Fellow")
         elif args['<person_type>'].lower() == 'fellow' and args['<wants_accommodation>'] == 'y':
             Dojo().add_person(person_name, args['<person_type>'], args['<wants_accommodation>'])
-            print(person_name + " has been added as a Fellow")
+            #print(person_name + " has been added as a Fellow")
         elif args['<person_type>'].lower() == 'fellow' and args['<wants_accommodation>'] == 'N':
             Dojo().add_person(person_name, args['<person_type>'], args['<wants_accommodation>'])
-            print(person_name + " has been added as a Fellow")
+            #print(person_name + " has been added as a Fellow")
         elif args['<person_type>'].lower() == 'fellow' and args['<wants_accommodation>'] == 'n':
             Dojo().add_person(person_name, args['<person_type>'], args['<wants_accommodation>'])
-            print(person_name + " has been added as a Fellow")
+            #print(person_name + " has been added as a Fellow")
         else:
             print("Wrong inputs entered. Type 'help add_person' for help")
 
