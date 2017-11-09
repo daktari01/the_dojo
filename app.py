@@ -11,6 +11,7 @@ the_dojo
 Usage: 
     create_room <room_type> <room_name> ...
     add_person <person_name> (FELLOW|STAFF) [wants_accommodation]
+    print_room <room_name>
     
 Options:
     room_type               Type of room, either office or living space.
@@ -46,7 +47,7 @@ def the_dojo_docopt(func):
 
 class TheDojo(cmd.Cmd):
     # Print the_dojo graphic
-    
+    '''
     print("****** " + " **  ** " + " ****** " + "   " + "***    " + "  ****  " \
                     + "     ** " + "  ****  ")
     print("****** " + " **  ** " + " ****** " + "   " + "*****  " + " ****** " \
@@ -63,14 +64,15 @@ class TheDojo(cmd.Cmd):
                     + " ****** " + " ****** ")
     print("  **   " + " **  ** " + " ****** " + "   " + "***    " + "  ****  " \
                     + "  ****  " + "  ****  ")
-    
+    '''
 
     intro = "Welcome to the_dojo program!"  \
         + " Type help for a list of commands"
 
     prompt = '[dojo]>> '
 
-
+    dojo = Dojo()
+    
     @the_dojo_docopt
     def do_add_person(self, args):
         """
@@ -85,22 +87,22 @@ class TheDojo(cmd.Cmd):
         if args['<person_type>'].lower() == 'staff' and args['<wants_accommodation>'] is not None:
             print("Staff cannot be allocated living spaces")
         elif args['<person_type>'].lower() == 'staff' and args['<wants_accommodation>'] is None:
-            Dojo().add_person(person_name, args['<person_type>'])
+            self.dojo.add_person(person_name, args['<person_type>'])
             #print(person_name + " has been added as a Staff")
         elif args['<person_type>'].lower() == 'fellow' and args['<wants_accommodation>'] is None:
-            Dojo().add_person(person_name, args['<person_type>'])
+            self.dojo.add_person(person_name, args['<person_type>'])
             #print(person_name + " has been added as a Fellow")
         elif args['<person_type>'].lower() == 'fellow' and args['<wants_accommodation>'] == 'Y':
-            Dojo().add_person(person_name, args['<person_type>'], args['<wants_accommodation>'])
+            self.dojo.add_person(person_name, args['<person_type>'], args['<wants_accommodation>'])
             #print(person_name + " has been added as a Fellow")
         elif args['<person_type>'].lower() == 'fellow' and args['<wants_accommodation>'] == 'y':
-            Dojo().add_person(person_name, args['<person_type>'], args['<wants_accommodation>'])
+            self.dojo.add_person(person_name, args['<person_type>'], args['<wants_accommodation>'])
             #print(person_name + " has been added as a Fellow")
         elif args['<person_type>'].lower() == 'fellow' and args['<wants_accommodation>'] == 'N':
-            Dojo().add_person(person_name, args['<person_type>'], args['<wants_accommodation>'])
+            self.dojo.add_person(person_name, args['<person_type>'], args['<wants_accommodation>'])
             #print(person_name + " has been added as a Fellow")
         elif args['<person_type>'].lower() == 'fellow' and args['<wants_accommodation>'] == 'n':
-            Dojo().add_person(person_name, args['<person_type>'], args['<wants_accommodation>'])
+            self.dojo.add_person(person_name, args['<person_type>'], args['<wants_accommodation>'])
             #print(person_name + " has been added as a Fellow")
         else:
             print("Wrong inputs entered. Type 'help add_person' for help")
@@ -117,11 +119,21 @@ class TheDojo(cmd.Cmd):
         """
         if args['<room_type>'].lower() == 'office' or args['<room_type>'].lower() == 'living':
             for name in args['<room_name>']:
-                Dojo().create_room(args['<room_type>'], name)
+                self.dojo.create_room(args['<room_type>'], name)
                 print(args['<room_type>'] + " " + name + " created successfully")
         else:
             print("Wrong room type entered")
 
+    @the_dojo_docopt
+    def do_print_room(self, args):
+        """
+        Usage: print_room <room_name>
+
+        Options:
+        room_name             Name of the room whose occupants to list
+        """
+        self.dojo.print_room(['<room_name>'])
+    
     def do_quit(self):
         """Quits the_dojo"""
         print("Thank you for using the_dojo. Goodbye!")
