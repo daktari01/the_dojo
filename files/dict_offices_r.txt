@@ -1,0 +1,4 @@
+Mandela = []
+Finance = ['Norton Akenga']
+Madiba = []
+Operations = []

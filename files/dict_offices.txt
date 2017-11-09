@@ -1,16 +1,16 @@
-blue
+Mandela
  ---------------------------------------- 
-['Oliver', 'Otos', 'Justo']
+[]
 
-cyan
+Finance
  ---------------------------------------- 
-['Kipsangui']
+['Norton Akenga']
 
-magenta
+Madiba
  ---------------------------------------- 
-['Eunice', 'Kenga', 'Galo', 'Orkoiyot']
+[]
 
-red
+Operations
  ---------------------------------------- 
-['Morris', 'Roy']
+[]
 

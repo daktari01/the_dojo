@@ -21,7 +21,9 @@ class Dojo:
         self.fellows_want_living_unallocated = []
         self.fellows_living_allocated = []
         self.dict_livings = {}
+        self.dict_livings = self.write_read_dict_text(self.dict_livings, './files/dict_livings.txt', './files/dict_livings_r.txt')
         self.dict_offices = {}
+        self.dict_offices = self.write_read_dict_text(self.dict_offices, './files/dict_offices.txt', './files/dict_offices_r.txt')
         
     def get_random_room(self, room_dict, room_capacity):
         """Returns a random room that has available space"""
@@ -120,6 +122,7 @@ class Dojo:
             # Allocate office to fellows
             available_office = self.get_random_room(self.dict_offices, 6)
             self.dict_offices[available_office].append(person_name)
+            self.dict_offices = self.write_read_dict_text(self.dict_offices, './files/dict_offices.txt', './files/dict_offices_r.txt')
             print(person_name + " has been allocated office " + available_office)
             print(self.dict_offices)
             # Write the self.dict_offices to a file and instantiate self.dict_offices 
@@ -202,5 +205,28 @@ class Dojo:
             available_office = self.get_random_room(self.dict_offices, office_capacity)
             available_office.append(person_name)
             return available_office
+            
+    def write_read_dict_text(self, dict_to_read, write_file, read_file):
+        """Writes a dictionary to a file and returns the updated dictionary"""
+        dict_from_file = {}
+        fout = write_file
+        fout_r = read_file
+        fo = open(fout, "w")
+        fo_r = open(fout_r, "w")
+        
+        for k, v in dict_to_read.items():
+            fo.write(str(k) + '\n' + ' ---------------------------------------- '+ '\n' + str(v) + '\n\n')
+            fo_r.write(str(k) + ' = ' + str(v) + '\n')
+        fo_r.close()
+        fo.close()
+        
+        
+        with open(read_file) as f:
+            for line in f:
+                k, v = line.strip().split(' = ')
+                dict_from_file[k.strip()] = v.strip()
+        
+        f.close()
+        return dict_from_file
 
                    

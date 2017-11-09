@@ -47,7 +47,7 @@ def write_read_dict_text(dict_to_read, write_file, read_file):
     fo.close()
     
     
-    with open('members_r.txt') as f:
+    with open(read_file) as f:
         for line in f:
             k, v = line.strip().split(' = ')
             dict_from_file[k.strip()] = v.strip()
