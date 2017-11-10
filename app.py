@@ -12,6 +12,8 @@ Usage:
     create_room <room_type> <room_name> ...
     add_person <person_name> (FELLOW|STAFF) [wants_accommodation]
     print_room <room_name>
+    print_allocations [-o=filename]
+    print_unallocated [-o=filename]
     
 Options:
     room_type               Type of room, either office or living space.
@@ -120,7 +122,7 @@ class TheDojo(cmd.Cmd):
         if args['<room_type>'].lower() == 'office' or args['<room_type>'].lower() == 'living':
             for name in args['<room_name>']:
                 self.dojo.create_room(args['<room_type>'], name)
-                print(args['<room_type>'] + " " + name + " created successfully")
+                #print(args['<room_type>'] + " " + name + " created successfully")
         else:
             print("Wrong room type entered")
 
@@ -132,7 +134,12 @@ class TheDojo(cmd.Cmd):
         Options:
         room_name             Name of the room whose occupants to list
         """
-        self.dojo.print_room(['<room_name>'])
+        #self.dojo.print_room(['<room_name>'])
+
+    def do_print_allocations(self, args):
+        """
+        Usage: print_allocations [-o=filename]
+        """
     
     def do_quit(self):
         """Quits the_dojo"""

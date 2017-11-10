@@ -7,4 +7,23 @@
 
 The Dojo Project - Andela
 
+The Dojo is program that ensures fair distribution of resources to avoid wastage.
+
+### How To Use 
+
+1. Navigate to the folder you want the project in.
+2. Download or clone it by running the command: `git clone https://github.com/daktari01/the_dojo.git`
+3. Install the requirements by running the command: `pip3 install -r requirements.txt`
+4. Run the tests to ensure everything is okay `nosetests tests/`
+
+
+## Software Develpers
+### How To Contribute
+
+1. Create a branch `git checkout -b samplebranch`
+2. Make changes as deemed necessary
+3. Create a pull request
+
+
+
 
