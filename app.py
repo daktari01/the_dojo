@@ -1,6 +1,7 @@
 import cmd
 import sys
 
+from termcolor import colored
 from docopt import docopt, DocoptExit
 from source.dojo import Dojo
 
@@ -49,24 +50,24 @@ def the_dojo_docopt(func):
 
 class TheDojo(cmd.Cmd):
     # Print the_dojo graphic
-    '''
-    print("****** " + " **  ** " + " ****** " + "   " + "***    " + "  ****  " \
-                    + "     ** " + "  ****  ")
-    print("****** " + " **  ** " + " ****** " + "   " + "*****  " + " ****** " \
-                    + "     ** " + " ****** ")
+    
+    print(colored("****** " + " **  ** " + " ****** " + "   " + "***    " + "  ****  " \
+                    + "     ** " + "  ****  ", 'blue'))
+    print(colored("****** " + " **  ** " + " ****** " + "   " + "*****  " + " ****** " \
+                    + "     ** " + " ****** ", 'blue'))
     print("  **   " + " **  ** " + " **     " + "   " + "**  ** " + " **  ** " \
                     + "     ** " + " **  ** ")
-    print("  **   " + " ****** " + " *****  " + "   " + "**  ** " + " **  ** " \
-                    + "     ** " + " **  ** ")
-    print("  **   " + " ****** " + " *****  " + "   " + "**  ** " + " **  ** " \
-                    + " **  ** " + " **  ** ")
+    print(colored("  **   " + " ****** " + " *****  " + "   " + "**  ** " + " **  ** " \
+                    + "     ** " + " **  ** ", 'red'))
+    print(colored("  **   " + " ****** " + " *****  " + "   " + "**  ** " + " **  ** " \
+                    + " **  ** " + " **  ** ", 'red'))
     print("  **   " + " **  ** " + " **     " + "   " + "**  ** " + " **  ** " \
                     + " **  ** " + " **  ** ")
-    print("  **   " + " **  ** " + " ****** " + "   " + "*****  " + " ****** " \
-                    + " ****** " + " ****** ")
-    print("  **   " + " **  ** " + " ****** " + "   " + "***    " + "  ****  " \
-                    + "  ****  " + "  ****  ")
-    '''
+    print(colored("  **   " + " **  ** " + " ****** " + "   " + "*****  " + " ****** " \
+                    + " ****** " + " ****** ", 'green'))
+    print(colored("  **   " + " **  ** " + " ****** " + "   " + "***    " + "  ****  " \
+                    + "  ****  " + "  ****  ", 'green'))
+    
 
     intro = "Welcome to the_dojo program!"  \
         + " Type help for a list of commands"
@@ -85,23 +86,36 @@ class TheDojo(cmd.Cmd):
             second_name             Second name of the person to be added
             wants_accommodation     Whether person wants accommodation or not. [default: N]
         """
-        person_name = '{} {}'.format(args['<first_name>'], args['<second_name>'])
-        if args['<person_type>'].lower() == 'staff' and args['<wants_accommodation>'] is not None:
+        person_name = '{} {}'.format(args['<first_name>'], \
+                                    args['<second_name>'])
+        if args['<person_type>'].lower() == 'staff' \
+                                and args['<wants_accommodation>'] is not None:
             print("Staff cannot be allocated living spaces")
-        elif args['<person_type>'].lower() == 'staff' and args['<wants_accommodation>'] is None:
+        elif args['<person_type>'].lower() == 'staff' \
+                                    and args['<wants_accommodation>'] is None:
             self.dojo.add_person(person_name, args['<person_type>'])
-        elif args['<person_type>'].lower() == 'fellow' and args['<wants_accommodation>'] is None:
+        elif args['<person_type>'].lower() == 'fellow' \
+                                    and args['<wants_accommodation>'] is None:
             self.dojo.add_person(person_name, args['<person_type>'])
-        elif args['<person_type>'].lower() == 'fellow' and args['<wants_accommodation>'] == 'Y':
-            self.dojo.add_person(person_name, args['<person_type>'], args['<wants_accommodation>'])
-        elif args['<person_type>'].lower() == 'fellow' and args['<wants_accommodation>'] == 'y':
-            self.dojo.add_person(person_name, args['<person_type>'], args['<wants_accommodation>'])
-        elif args['<person_type>'].lower() == 'fellow' and args['<wants_accommodation>'] == 'N':
-            self.dojo.add_person(person_name, args['<person_type>'], args['<wants_accommodation>'])
-        elif args['<person_type>'].lower() == 'fellow' and args['<wants_accommodation>'] == 'n':
-            self.dojo.add_person(person_name, args['<person_type>'], args['<wants_accommodation>'])
+        elif args['<person_type>'].lower() == 'fellow' \
+                                    and args['<wants_accommodation>'] == 'Y':
+            self.dojo.add_person(person_name, args['<person_type>'], \
+                                                args['<wants_accommodation>'])
+        elif args['<person_type>'].lower() == 'fellow' \
+                                    and args['<wants_accommodation>'] == 'y':
+            self.dojo.add_person(person_name, args['<person_type>'], \
+                                                args['<wants_accommodation>'])
+        elif args['<person_type>'].lower() == 'fellow' \
+                                    and args['<wants_accommodation>'] == 'N':
+            self.dojo.add_person(person_name, args['<person_type>'], \
+                                                args['<wants_accommodation>'])
+        elif args['<person_type>'].lower() == 'fellow' \
+                                    and args['<wants_accommodation>'] == 'n':
+            self.dojo.add_person(person_name, args['<person_type>'], \
+                                                args['<wants_accommodation>'])
         else:
-            print("Wrong inputs entered. Type 'help add_person' for help")
+            print(colored("Wrong inputs entered." \
+                                + "Type 'help add_person' for help", 'red'))
 
 
     @the_dojo_docopt
@@ -113,11 +127,12 @@ class TheDojo(cmd.Cmd):
             person_name             Name of the person to be created
             wants_accommodation     Whether person wants accommodation or not. [default: N]
         """
-        if args['<room_type>'].lower() == 'office' or args['<room_type>'].lower() == 'living':
+        if args['<room_type>'].lower() == 'office' or args['<room_type>']\
+                                                        .lower() == 'living':
             for name in args['<room_name>']:
                 self.dojo.create_room(args['<room_type>'], name)
         else:
-            print("Wrong room type entered")
+            print(colored("Wrong room type entered", 'red'))
 
     @the_dojo_docopt
     def do_print_room(self, args):
@@ -142,9 +157,22 @@ class TheDojo(cmd.Cmd):
         else:
             self.dojo.print_allocations()
 
+    @the_dojo_docopt
+    def do_print_unallocated(self, arg_o):
+        """
+        Usage: print_unallocated [-o]
+        
+        Options:
+        -o              Save to a file or not [default:filename]
+        """
+        if arg_o["-o"]:
+            self.dojo.print_unallocated('-o')
+        else:
+            self.dojo.print_unallocated()
+
     def do_quit(self):
         """Quits the_dojo"""
-        print("Thank you for using the_dojo. Goodbye!")
+        print(colored("Thank you for using the_dojo. Goodbye!", 'yellow'))
         exit()
 
 if __name__ == '__main__':
