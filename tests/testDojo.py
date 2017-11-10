@@ -61,11 +61,7 @@ class DojoTest(unittest.TestCase):
     def test_cannot_create_office(self):
         blue_office = self.Dojo.create_room("office", "Grey")
         blue_office_dup = self.Dojo.create_room("office", "Grey")
-        self.assertEqual("Office already exists. Please try using a different name", blue_office_dup)
-        
-    
-    
-
+        self.assertIn("Office already exists. Please try using a different name", blue_office_dup)
 
 if __name__ == '__main__':
     unittest.main(exit=False)
