@@ -1,4 +1,12 @@
 blue = ['Oliver', 'Otos', 'Justo']
+
+
 cyan = ['Kipsangui']
-magenta = ['Eunice', 'Kenga', 'Galo', 'Orkoiyot']
+
+
 red = ['Morris', 'Roy']
+
+
+magenta = ['Eunice', 'Kenga', 'Galo', 'Orkoiyot']
+
+

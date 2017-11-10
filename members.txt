@@ -1,16 +1,16 @@
-blue
+RED
  ---------------------------------------- 
-['Oliver', 'Otos', 'Justo']
+Samuel, Luke, Jonathan, Myles
 
-cyan
+CYAN
  ---------------------------------------- 
-['Kipsangui']
+Eunice, Joan, Peter, Festus, Ezra
 
-red
+MAGENTA
  ---------------------------------------- 
-['Morris', 'Roy']
+Hannah, Joseph
 
-magenta
+BLUE
  ---------------------------------------- 
-['Eunice', 'Kenga', 'Galo', 'Orkoiyot']
+Morris, Jason
 

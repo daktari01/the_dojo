@@ -1,3 +1,4 @@
+'''
 import random
 
 def get_random_room(room_dict, room_capacity):
@@ -9,14 +10,20 @@ def get_random_room(room_dict, room_capacity):
             random_key = random.choice(list(room_dict))
         return random_key
 
-
+'''
 dict_A = {
-    'red':[],
-    'blue':[],
-    'cyan':[],
-    'magenta':[]
+    'red':['Samuel', 'Luke', 'Jonathan', 'Myles'],
+    'blue':['Morris', 'Jason'],
+    'cyan':['Eunice', 'Joan', 'Peter', 'Festus', 'Ezra'],
+    'magenta':['Hannah', 'Joseph']
 }
-
+dict_B = {
+    'blak':['Jillo', 'Mloi', 'Ryan', 'Sarah'],
+    'brown':['Ann', 'John'],
+    'grey':['Eric', 'Irene', 'Andreas', 'Kerian', 'Tony'],
+    'white':['Fellaini', 'Romeo']
+}
+'''
 print(dict_A)
 chosen_room = get_random_room(dict_A, 4)
 print(chosen_room)
@@ -39,6 +46,7 @@ print(dict_A)
 dict_A[chosen_room].append('Grandpa')
 print(dict_A)
 
+'''
 '''
 # Remove person from unallocated list
 file_allocated = open('./files/all_pple_unallocated_office.txt', 'r')
@@ -65,3 +73,18 @@ with open(all_people_path, 'w') as all_people_file:
                 all_people_file.write(line)
 all_people_file.close()
 '''
+
+def write_to_dict(dict_to_read_a, dict_to_read_b, write_file):
+    fout = write_file
+    fo_w = open(fout, "w")
+    fo_a = open(fout, "a")
+    
+    for key, value in dict_to_read_a.items():
+        fo_w.write(str(key).upper() + '\n' + ' ---------------------------------------- '+ '\n' + str(', '.join(value)) + '\n\n')
+    for key, value in dict_to_read_b.items():
+        fo_a.write(str(key).upper() + '\n' + ' ---------------------------------------- '+ '\n' + str(', '.join(value)) + '\n\n')
+    fo_a.close()
+    fo_w.close()
+    
+    
+write_to_dict(dict_A, dict_B, 'members.txt')

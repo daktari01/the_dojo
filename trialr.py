@@ -57,5 +57,14 @@ def write_read_dict_text(dict_to_read, write_file, read_file):
     
 dict_b = write_read_dict_text(dict_A, 'trias.txt', 'trias_r.txt')
 print(dict_b)
+
+def write_to_dict(dict_to read, file_write):
+    dict_from_file = {}
+    fout = write_file
+    fo = open(fout, "a")
+    
+    for key, value in dict_to_read.items():
+        fo.write(str(k).upper() + '\n' + ' ---------------------------------------- '+ '\n' + str(v) + '\n\n')
+    fo.close()
     
 

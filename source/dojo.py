@@ -130,29 +130,46 @@ class Dojo:
         global all_livings
         global all_offices
         global dict_livings
-
         
-        # Convert lists to sets to make them hashable
-        all_offices_set = set(self.all_offices.sort())
-        all_livings_set = set(self.all_livings)
-        #room_name_set = set(room_name)
-        
-        if room_name in all_offices_set:
-            print(self.dict_offices[room_name])
-        elif room_name in all_livings_set:
-            print(self.dict_livings[room_name])
+        if room_name in self.all_offices:
+            print(', '.join(self.dict_offices[room_name]))
+        elif room_name in self.all_livings:
+            print(', '.join(self.dict_livings[room_name]))
         else:
             print("The room does not exist. Please enter an existing one")
         
-        print(all_offices_set[room_name])
-        print(type(all_offices_set))
-
+        
     
-    def print_allocations(self, room_name, o='allocations.txt'):
+    def print_allocations(self, print_rooms=None):
         """Print list of allocations"""
         global dict_offices
         global all_livings
         global all_offices
         global dict_livings
+        
+        if print_rooms is None:
+            #print the rooms on the screen
+            self.print_dict(dict_offices)
+            self.print_dict(dict_livings)
+        elif print_rooms == '-o':
+            self.write_to_dict(self.dict_offices, './files/allocations.txt')
+            self.write_to_dict(self.dict_livings, './files/allocations.txt')
+            
+    def print_dict(self, dict_):
+        """Prints the dictionary"""
+        for key, value in dict_.items():
+            print(str(key).upper() + '\n'+'-------------------------------'+'\n' + str(', '.join(value)) + '\n\n')
+            
+    def write_to_dict(self, dict_to_read, write_file):
+        """Writes dictionary to file"""
+        fout = write_file
+        fo = open(fout, "a")
+        
+        for key, value in dict_to_read.items():
+            fo.write(str(key).upper() + '\n'+'-------------------------------'+'\n' + str(', '.join(value)) + '\n\n')
+        fo.close()
+        
+
+        
 
                             
