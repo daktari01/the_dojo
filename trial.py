@@ -73,7 +73,7 @@ with open(all_people_path, 'w') as all_people_file:
                 all_people_file.write(line)
 all_people_file.close()
 '''
-
+'''
 def write_to_dict(dict_to_read_a, dict_to_read_b, write_file):
     fout = write_file
     fo_w = open(fout, "w")
@@ -88,3 +88,10 @@ def write_to_dict(dict_to_read_a, dict_to_read_b, write_file):
     
     
 write_to_dict(dict_A, dict_B, 'members.txt')
+
+'''
+#dict_C = dict_B.update(dict_B)
+
+
+dict_C = dict(dict_A, **dict_B)
+print(dict_C)

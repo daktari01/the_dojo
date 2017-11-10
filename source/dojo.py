@@ -21,6 +21,7 @@ class Dojo:
         self.fellows_living_allocated = []
         self.dict_livings = {}
         self.dict_offices = {}
+        self.dict_all_rooms = {}
         
 
     def get_random_room(self, room_dict, room_capacity):
@@ -42,14 +43,13 @@ class Dojo:
         global all_offices
         global all_livings
         global all_staff
-        global all_fellows
-
   
         if room_type.lower() == "office":
             #self.all_offices = self.file_to_list_converter(office_path)
             for office in self.all_offices:
                 if office == room_name:
-                    print("Office already exists. Please try using a different name")
+                    print("Office already exists."\
+                            +" Please try using a different name")
                     return
             # Add office to dict_offices dictionary
             self.dict_offices[room_name] = []
@@ -61,7 +61,8 @@ class Dojo:
         elif room_type.lower() == "living":
             for living in self.all_livings:
                 if living == room_name:
-                    print("Living space already exists. Please try using a different name")
+                    print("Living space already exists."\
+                            +" Please try using a different name")
                     return
             # Add living space to dict_livings dictionary
             self.dict_livings[room_name] = []
@@ -99,8 +100,17 @@ class Dojo:
             # Allocate office to fellows
             available_office = self.get_random_room(self.dict_offices, 6)
             self.dict_offices[available_office].append(person_name)
-            print(person_name + " has been allocated office " + available_office)
+            print(person_name + " has been allocated office " \
+                                        + available_office)
             print(self.dict_offices)
+
+            # Allocate living space to fellows
+            available_living = self.get_random_room(self.dict_livings, 4)
+            if wants_accommodation == 'Y' or wants_accommodation == 'y':
+                self.dict_livings[available_living].append(person_name)
+                print(self.dict_livings)
+                print(person_name + " has been allocated living space " \
+                                        + available_living)
 
         elif person_type.upper() == 'STAFF':
             for staff in self.all_staff:
@@ -118,7 +128,8 @@ class Dojo:
             # Allocate office to staff
             available_office = self.get_random_room(self.dict_offices, 6)
             self.dict_offices[available_office].append(person_name)
-            print(person_name + " has been allocated office " + available_office)
+            print(person_name + " has been allocated office " \
+                                            + available_office)
             print(self.dict_offices)
 
         else:
@@ -138,7 +149,6 @@ class Dojo:
         else:
             print("The room does not exist. Please enter an existing one")
         
-        
     
     def print_allocations(self, print_rooms=None):
         """Print list of allocations"""
@@ -147,29 +157,32 @@ class Dojo:
         global all_offices
         global dict_livings
         
+        #Add the office dictionary and the livings one
+        dict_all_rooms = dict(self.dict_offices, **self.dict_livings)
+        
         if print_rooms is None:
-            #print the rooms on the screen
-            self.print_dict(dict_offices)
-            self.print_dict(dict_livings)
+            for key, value in dict_all_rooms.items():
+                print(str(key).upper() + '\n'+'-------------------------------'\
+                                        +'\n' + str(', '.join(value)) + '\n\n')
+                
         elif print_rooms == '-o':
-            self.write_to_dict(self.dict_offices, './files/allocations.txt')
-            self.write_to_dict(self.dict_livings, './files/allocations.txt')
-            
+            self.write_to_dict(dict_all_rooms, './files/allocations.txt')
+            print("The result has been written to file allocations.txt")
+
+    '''        
     def print_dict(self, dict_):
         """Prints the dictionary"""
         for key, value in dict_.items():
-            print(str(key).upper() + '\n'+'-------------------------------'+'\n' + str(', '.join(value)) + '\n\n')
+            print(str(key).upper() + '\n'+'-------------------------------'\
+                                    +'\n' + str(', '.join(value)) + '\n\n')
+    '''
             
     def write_to_dict(self, dict_to_read, write_file):
         """Writes dictionary to file"""
         fout = write_file
-        fo = open(fout, "a")
-        
+        fo = open(fout, "w")
         for key, value in dict_to_read.items():
-            fo.write(str(key).upper() + '\n'+'-------------------------------'+'\n' + str(', '.join(value)) + '\n\n')
+            fo.write(str(key).upper() + '\n'+'-------------------------------'\
+                                        +'\n' + str(', '.join(value)) + '\n\n')
         fo.close()
-        
-
-        
-
-                            
+                        

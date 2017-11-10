@@ -129,14 +129,19 @@ class TheDojo(cmd.Cmd):
         """
         self.dojo.print_room(args['<room_name>'])
 
-    def do_print_allocations(self, args):
+    @the_dojo_docopt
+    def do_print_allocations(self, arg_o):
         """
         Usage: print_allocations [-o]
         
         Options:
         -o              Save to a file or not [default:filename]
         """
-        self.dojo.print_allocations('-o')
+        if arg_o["-o"]:
+            self.dojo.print_allocations('-o')
+        else:
+            self.dojo.print_allocations()
+
     def do_quit(self):
         """Quits the_dojo"""
         print("Thank you for using the_dojo. Goodbye!")
