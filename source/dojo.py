@@ -124,17 +124,24 @@ class Dojo:
                 if staff == person_name:
                     print(colored("Staff already exists!", 'red'))
                     return
-            new_person = Staff(person_name)
+            # Check if any office has space    
+            if self.check_available_space(self.dict_offices, 6) is True:
+                available_office = self.get_random_room(self.dict_offices, 6)
+                # Add new staff to all_staff list
+                self.all_staff.append(person_name)
+                print(colored(person_name + " has been added as a Staff", 'yellow'))
 
-            # Add new staff to all_staff list
-            self.all_staff.append(new_person)
-            print(colored(person_name + " has been added as a Staff", 'yellow'))
-
-            # Allocate office to staff
-            available_office = self.get_random_room(self.dict_offices, 6)
-            self.dict_offices[available_office].append(person_name)
-            print(colored(person_name + " has been allocated office " \
-                                            + available_office, 'yellow'))
+                # Allocate office to staff
+                
+                self.dict_offices[available_office].append(person_name)
+                print(colored(person_name + " has been allocated office " \
+                                                + available_office, 'yellow'))
+            else:
+                self.all_staff.append(person_name)
+                print(colored(person_name + " has been added as a Staff", 'yellow'))
+                print(colored("There is no available office to add " \
+                            + person_name + ". Create one first", 'red'))
+                self.unallocated_people.append(person_name)
 
         else:
             print(colored("Wrong person type entered. Please try again", 'red'))

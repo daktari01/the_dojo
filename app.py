@@ -90,7 +90,7 @@ class TheDojo(cmd.Cmd):
                                     args['<second_name>'])
         if args['<person_type>'].lower() == 'staff' \
                                 and args['<wants_accommodation>'] is not None:
-            print("Staff cannot be allocated living spaces")
+            print(colored("Staff cannot be allocated living spaces", 'red'))
         elif args['<person_type>'].lower() == 'staff' \
                                     and args['<wants_accommodation>'] is None:
             self.dojo.add_person(person_name, args['<person_type>'])
