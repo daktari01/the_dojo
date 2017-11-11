@@ -27,7 +27,6 @@ class Dojo:
     def get_random_room(self, room_dict, room_capacity):
         """Returns a random room that has available space"""
         # Pick a random key from the dictionary
-        
         random_key = random.choice(list(room_dict))
         while room_capacity == len(room_dict[random_key]):
             random_key = random.choice(list(room_dict))

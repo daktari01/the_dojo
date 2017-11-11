@@ -1,5 +1,13 @@
 import unittest
+import io
+import sys
+import re
 
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO
+from io import StringIO
 from source.room import Room, Office, LivingSpace
 from source.person import Person, Staff, Fellow
 from source.dojo import Dojo
@@ -8,8 +16,8 @@ from source.dojo import Dojo
 class DojoTest(unittest.TestCase):
     """Test the dojo module"""
     def setUp(self):
-        self.Dojo = Dojo()
-    
+        self.dojo = Dojo()
+        
     def test_person_instance(self):
         """Test instance of class Person"""
         person1 = Person('Kioko')
@@ -51,17 +59,26 @@ class DojoTest(unittest.TestCase):
         self.assertTrue(isinstance(living3, LivingSpace))
     
     def test_create_room_successfully(self):
-        initial_room_count = len(self.Dojo.all_offices)
-        blue_office = self.Dojo.create_room("office", "Turquoise")
-        #self.assertTrue(blue_office)
-        new_room_count = len(self.Dojo.all_offices)
+        initial_room_count = len(self.dojo.all_offices)
+        blue_office = self.dojo.create_room("office", "Turquoise")
+        new_room_count = len(self.dojo.all_offices)
         self.assertEqual(new_room_count - initial_room_count, 1)
-        #delete Dojo instance in teardoe
-        
+       
     def test_cannot_create_office(self):
-        blue_office = self.Dojo.create_room("office", "Grey")
-        blue_office_dup = self.Dojo.create_room("office", "Grey")
-        self.assertIn("Office already exists. Please try using a different name", blue_office_dup)
+        blue_office = self.dojo.create_room("office", "Grey")
+        blue_office_dup = self.dojo.create_room("office", "Grey")
+        output = "Office Grey created successfullyOffice already exists. Please try using a different name"
+        self.assertEqual(re.sub(r'(\x9B|\x1B\[)[0-?]*[ -\/]*[@-~][\n]*', '', \
+                                    sys.stdout.getvalue()), output)
+    
+    def test_person_staff_or_fellow(self):
+        person1 = self.dojo.add_person('John Doe', 'officer')
+        output = "Wrong person type entered. Please try again"
+        self.assertEqual(re.sub(r'(\x9B|\x1B\[)[0-?]*[ -\/]*[@-~][\n]*', '', \
+                                                sys.stdout.getvalue()), output)
+
+    
+   
 
 if __name__ == '__main__':
     unittest.main(exit=False)
