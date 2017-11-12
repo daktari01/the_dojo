@@ -81,7 +81,6 @@ class Dojo:
                     print(colored("Fellow already exists!", 'red'))
                     return
             
-            
             # Check if any office has space
             if self.check_available_space(self.dict_offices, 6) is True:
                 self.all_fellows.append(person_name)
