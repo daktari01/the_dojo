@@ -1,6 +1,7 @@
 import cmd
 import sys
 
+from termcolor import colored
 from docopt import docopt, DocoptExit
 from source.dojo import Dojo
 
@@ -11,6 +12,9 @@ the_dojo
 Usage: 
     create_room <room_type> <room_name> ...
     add_person <person_name> (FELLOW|STAFF) [wants_accommodation]
+    print_room <room_name>
+    print_allocations [-o=filename]
+    print_unallocated [-o=filename]
     
 Options:
     room_type               Type of room, either office or living space.
@@ -24,7 +28,7 @@ Options:
 """
 def the_dojo_docopt(func):
     """
-    This decorator is used to pass the result of the docopt parsing to 
+    This decorator is used to pass the result of the docopt parsing to \
     the called action
     """
     def fn(self, args):
@@ -46,27 +50,73 @@ def the_dojo_docopt(func):
 
 class TheDojo(cmd.Cmd):
     # Print the_dojo graphic
-    print("****** " + " **  ** " + " ****** " + "   " + "***    " + "  ****  " \
-                    + "     ** " + "  ****  ")
-    print("****** " + " **  ** " + " ****** " + "   " + "*****  " + " ****** " \
-                    + "     ** " + " ****** ")
+    
+    print(colored("****** " + " **  ** " + " ****** " + "   " + "***    " + "  ****  " \
+                    + "     ** " + "  ****  ", 'blue'))
+    print(colored("****** " + " **  ** " + " ****** " + "   " + "*****  " + " ****** " \
+                    + "     ** " + " ****** ", 'blue'))
     print("  **   " + " **  ** " + " **     " + "   " + "**  ** " + " **  ** " \
                     + "     ** " + " **  ** ")
-    print("  **   " + " ****** " + " *****  " + "   " + "**  ** " + " **  ** " \
-                    + "     ** " + " **  ** ") 
-    print("  **   " + " ****** " + " *****  " + "   " + "**  ** " + " **  ** " \
-                    + " **  ** " + " **  ** ")
+    print(colored("  **   " + " ****** " + " *****  " + "   " + "**  ** " + " **  ** " \
+                    + "     ** " + " **  ** ", 'red'))
+    print(colored("  **   " + " ****** " + " *****  " + "   " + "**  ** " + " **  ** " \
+                    + " **  ** " + " **  ** ", 'red'))
     print("  **   " + " **  ** " + " **     " + "   " + "**  ** " + " **  ** " \
                     + " **  ** " + " **  ** ")
-    print("  **   " + " **  ** " + " ****** " + "   " + "*****  " + " ****** " \
-                    + " ****** " + " ****** ")
-    print("  **   " + " **  ** " + " ****** " + "   " + "***    " + "  ****  " \
-                    + "  ****  " + "  ****  ")  
+    print(colored("  **   " + " **  ** " + " ****** " + "   " + "*****  " + " ****** " \
+                    + " ****** " + " ****** ", 'green'))
+    print(colored("  **   " + " **  ** " + " ****** " + "   " + "***    " + "  ****  " \
+                    + "  ****  " + "  ****  ", 'green'))
+    
 
     intro = "Welcome to the_dojo program!"  \
         + " Type help for a list of commands"
 
     prompt = '[dojo]>> '
+
+    dojo = Dojo()
+    
+    @the_dojo_docopt
+    def do_add_person(self, args):
+        """
+        Usage: add_person <first_name> <second_name> <person_type> [<wants_accommodation>]
+
+        Options:
+            first_name              First name of the person to be added
+            second_name             Second name of the person to be added
+            wants_accommodation     Whether person wants accommodation or not. [default: N]
+        """
+        person_name = '{} {}'.format(args['<first_name>'], \
+                                    args['<second_name>'])
+        if args['<person_type>'].lower() == 'staff' \
+                                and args['<wants_accommodation>'] is not None:
+            print(colored("Staff cannot be allocated living spaces", 'red'))
+        elif args['<person_type>'].lower() == 'staff' \
+                                    and args['<wants_accommodation>'] is None:
+            self.dojo.add_person(person_name, args['<person_type>'])
+        elif args['<person_type>'].lower() == 'fellow' \
+                                    and args['<wants_accommodation>'] is None:
+            self.dojo.add_person(person_name, args['<person_type>'])
+        elif args['<person_type>'].lower() == 'fellow' \
+                                    and args['<wants_accommodation>'] == 'Y':
+            self.dojo.add_person(person_name, args['<person_type>'], \
+                                                args['<wants_accommodation>'])
+        elif args['<person_type>'].lower() == 'fellow' \
+                                    and args['<wants_accommodation>'] == 'y':
+            self.dojo.add_person(person_name, args['<person_type>'], \
+                                                args['<wants_accommodation>'])
+        elif args['<person_type>'].lower() == 'fellow' \
+                                    and args['<wants_accommodation>'] == 'N':
+            self.dojo.add_person(person_name, args['<person_type>'], \
+                                                args['<wants_accommodation>'])
+        elif args['<person_type>'].lower() == 'fellow' \
+                                    and args['<wants_accommodation>'] == 'n':
+            self.dojo.add_person(person_name, args['<person_type>'], \
+                                                args['<wants_accommodation>'])
+        else:
+            print(colored("Wrong inputs entered." \
+                                + "Type 'help add_person' for help", 'red'))
+
 
     @the_dojo_docopt
     def do_create_room(self, args): 
@@ -77,41 +127,53 @@ class TheDojo(cmd.Cmd):
             person_name             Name of the person to be created
             wants_accommodation     Whether person wants accommodation or not. [default: N]
         """
-        for name in args['<room_name>']:
-            Dojo().create_room(args['<room_type>'], name)
-        print(args)
-        
+        if args['<room_type>'].lower() == 'office' or args['<room_type>']\
+                                                        .lower() == 'living':
+            for name in args['<room_name>']:
+                self.dojo.create_room(args['<room_type>'], name)
+        else:
+            print(colored("Wrong room type entered", 'red'))
 
     @the_dojo_docopt
-    def do_add_person(self, args): 
+    def do_print_room(self, args):
         """
-        Usage: add_person <person_name> <person_type> [<wants_accommodation>]
+        Usage: print_room <room_name>
 
         Options:
-            person_name             Name of the person to be created
-            wants_accommodation     Whether person wants accommodation or not. [default: N]
+        room_name             Name of the room whose occupants to list
         """
-        if args['<person_type>'].lower() == 'staff' and args['<wants_accommodation>'].upper() == 'Y':
-            print("Staff cannot be allocated living spaces")
-        elif args['<wants_accommodation>'] is None:
-            Dojo().add_person(args['<person_name>'], args['<person_type>'])
-        else: 
-            Dojo().add_person(args['<person_name>'], args['<person_type>'], \
-                                 args['<wants_accommodation>'])
+        self.dojo.print_room(args['<room_name>'])
 
-        if args['<person_type>'].lower() == 'staff':
-            print(args['<person_name>'] + " has been added as a Staff")
-        elif args['<person_type>'].lower() == 'fellow':
-            print(args['<person_name>'] + " has been added as a Fellow")
+    @the_dojo_docopt
+    def do_print_allocations(self, arg_o):
+        """
+        Usage: print_allocations [-o]
+        
+        Options:
+        -o              Save to a file or not [default:filename]
+        """
+        if arg_o["-o"]:
+            self.dojo.print_allocations('-o')
         else:
-            raise RuntimeError("Wrong person type entered")
+            self.dojo.print_allocations()
 
-    def do_quit(self, args):
+    @the_dojo_docopt
+    def do_print_unallocated(self, arg_o):
+        """
+        Usage: print_unallocated [-o]
+        
+        Options:
+        -o              Save to a file or not [default:filename]
+        """
+        if arg_o["-o"]:
+            self.dojo.print_unallocated('-o')
+        else:
+            self.dojo.print_unallocated()
+
+    def do_quit(self):
         """Quits the_dojo"""
-        print("Thank you for using the_dojo. Goodbye!")
+        print(colored("Thank you for using the_dojo. Goodbye!", 'yellow'))
         exit()
 
 if __name__ == '__main__':
     TheDojo().cmdloop()
-
-

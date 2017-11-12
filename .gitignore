@@ -102,3 +102,8 @@ dojo_env/
 .mypy_cache/
 
 .vscode/
+*.pyc
+trial.py
+trialr.py
+members.txt
+members_r.txt
