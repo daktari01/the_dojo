@@ -46,24 +46,24 @@ kindly liase with your adminstrator to help you set up the program.
 `create_room <room_type> <room_name> ...`
 
 __Examples__   
-    a. `create room office Mandela Machel`   
-        The above command creates offices called 'Mandela' and 'Machel'   
-    b. `create room living Freedom Longonot`
-        The above command creates living spaces called 'Freedom' and 'Longonot'   
+* `create room office Mandela Machel`   
+    The above command creates offices called 'Mandela' and 'Machel'   
+* `create room living Freedom Longonot`
+    The above command creates living spaces called 'Freedom' and 'Longonot'   
 
-4. __To add people, run:__   
+ 4. __To add people, run:__   
 `add_person <first_name>  <second_name> (FELLOW|STAFF) [wants_accommodation]`   
 
 __Examples__   
-1. `add_person John Doe FELLOW Y`   
+* `add_person John Doe FELLOW Y`   
     The above command adds a new person called 'John Doe' who wants accomodation.
     'John Doe' will be assigned an office space and living space automatically if they are available.
     Fellows are allocated living spaces only if they want by adding the `Y`.
-2. `add_person Jane Doe FELLOW`   
+* `add_person Jane Doe FELLOW`   
     The above command adds a new person called 'Jane Doe' who does not want accomodation.
     'Jane Doe' will be assigned an office space automatically if it is available.
     Fellows are by default not given living spaces, unless they want it by adding the `Y`.
-3. `add_person Harry Winks STAFF`   
+* `add_person Harry Winks STAFF`   
     The above command adds a new person called 'Harry Winks'.
     'Harry Winks' will be assigned an office space automatically if it is available.
     Staff cannot be allocated living spaces.
@@ -72,18 +72,18 @@ __Examples__
 `print_room <room_name>`   
 
 __Examples__
-1. `print_room Mandela`   
+* `print_room Mandela`   
     The above command prints a list of the people in 'Mandela' office   
-2. `print_room Longonot`   
-    The above command prints a list of the people in 'Longonot' living room   
-      
+* `print_room Longonot`   
+    The above command prints a list of the people in 'Longonot' living room    
+
 6. __To see all the people and the rooms they have been allocated, run:__   
 `print_allocations [-o=filename]`   
 
 __Examples__   
-1. `print_allocations`   
+* `print_allocations`   
     The above command prints to the screen all people and the various rooms they have been allocated.   
-2. `print_allocations -o`   
+* `print_allocations -o`   
     The above command prints to a text file all people and the various rooms they have been allocated.   
     The file can be found at `./files/allocations.txt`   
 
@@ -93,9 +93,9 @@ Persons added are allocated rooms automatically.
 However, if by the time the person was added, either all rooms were full, or no room had been created, the person(s) added will not be allocated rooms.    
 
 __Examples__   
-1. `print_unallocated`   
+* `print_unallocated`   
     The above command prints to the screen all people who have not been allocated rooms.   
-2. `print_allocations -o`   
+* `print_allocations -o`   
     The above command prints to a text file all people who have not been allocated rooms.   
     The file can be found at `./files/unallocated.txt`   
 
