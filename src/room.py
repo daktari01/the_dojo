@@ -5,7 +5,6 @@ class Room():
         self.occupants = []
         self.room_name = room_name
        
-        
 class LivingSpace(Room):
     """Class LivingSpace inherits from Room"""
     capacity = 4

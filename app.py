@@ -3,7 +3,7 @@ import sys
 
 from termcolor import colored
 from docopt import docopt, DocoptExit
-from source.dojo import Dojo
+from src.dojo import Dojo
 
 
 """

@@ -95,7 +95,7 @@ class Dojo:
                 # When no office has space
                 self.all_fellows.append(person_name)
                 print(colored(person_name \
-                                + " has been added as a Fellow", 'yellow'))
+                               + " has been added as a Fellow", 'yellow'))
                 print(colored("There is no available office to add " + person_name \
                                         + ". Create one first", 'red'))
                 self.unallocated_people.append(person_name)
@@ -112,8 +112,6 @@ class Dojo:
                 else:
                     # When no living space has space
                     self.all_fellows.append(person_name)
-                    print(colored(person_name \
-                                + " has been added as a Fellow", 'yellow'))
                     print(colored("There is no available living space to add " \
                                 + person_name + ". Create one first", 'red'))
                     self.unallocated_people.append(person_name)
