@@ -4,6 +4,7 @@ from src.person import Person, Fellow, Staff
 
 
 class TestPerson(unittest.TestCase):
+    """Tests the person module"""
     def test_person_instance(self):
         """Test instance of class Person"""
         person1 = Person('Kioko')

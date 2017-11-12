@@ -3,7 +3,7 @@ import unittest
 from src.room import Room, Office, LivingSpace
 
 class TestRoom(unittest.TestCase):
-    """"""
+    """Tests the room module"""
     def test_room_instance(self):
         """Test instance of class Room"""
         room1 = Room('room1')
