@@ -2,8 +2,8 @@ import random
 
 
 from termcolor import colored
-from source.room import Room, Office, LivingSpace
-from source.person import Person, Staff, Fellow
+from src.room import Room, Office, LivingSpace
+from src.person import Person, Staff, Fellow
 
 
 class Dojo:
@@ -112,8 +112,6 @@ class Dojo:
                 else:
                     # When no living space has space
                     self.all_fellows.append(person_name)
-                    print(colored(person_name \
-                                + " has been added as a Fellow", 'yellow'))
                     print(colored("There is no available living space to add " \
                                 + person_name + ". Create one first", 'red'))
                     self.unallocated_people.append(person_name)

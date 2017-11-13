@@ -103,7 +103,8 @@ dojo_env/
 
 .vscode/
 *.pyc
-trial.py
+trials.py
 trialr.py
 members.txt
 members_r.txt
+source/
