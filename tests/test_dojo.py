@@ -108,6 +108,14 @@ class DojoTest(unittest.TestCase):
             +"living space to add Jane Doe. Create one first"
         self.assertEqual(re.sub(r'(\x9B|\x1B\[)[0-?]*[ -\/]*[@-~][\n]*', '', \
                                                 sys.stdout.getvalue()), output)
+                                                
+    def test_check_available_space(self):
+        """Tests that any room has available space"""
+        dict_a = {
+            'red': ['Joan', 'Anne', 'Beatrice'],
+            'blue': ['Joy', 'Irene']
+        }
+        self.assertTrue(self.dojo.check_available_space(dict_a, 3))
    
 
 if __name__ == '__main__':
