@@ -9,7 +9,7 @@ The Dojo Project - Andela
 
 The Dojo is program that ensures fair distribution of resources to avoid wastage.
 
-### Requiremts
+### Requirements
 
 Before setting up the project, ensure that you have the following:
 

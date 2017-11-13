@@ -1,14 +1,4 @@
-import cmd
-import sys
-
-from termcolor import colored
-from docopt import docopt, DocoptExit
-from src.dojo import Dojo
-
-
 """
-the_dojo
-
 Usage: 
     create_room <room_type> <room_name> ...
     add_person <person_name> (FELLOW|STAFF) [wants_accommodation]
@@ -21,11 +11,19 @@ Options:
     room_name               Name of room to create.
     person_name             Name of the person to be created
     wants_accommodation     Whether person wants accommodation or not. [default: N]
-    -h --help               Show this screen.
+    -h --help               Show the usage.
     --version               Show version.
-    -q                      Quit.
+    quit                      Quit.
     
 """
+
+import cmd
+import sys
+
+from termcolor import colored
+from docopt import docopt, DocoptExit
+from src.dojo import Dojo
+
 def the_dojo_docopt(func):
     """
     This decorator is used to pass the result of the docopt parsing to \
@@ -68,9 +66,6 @@ class TheDojo(cmd.Cmd):
     print(colored("  **   " + " **  ** " + " ****** " + "   " + "***    " + "  ****  " \
                     + "  ****  " + "  ****  ", 'green'))
     
-
-    intro = "Welcome to the_dojo program!"  \
-        + " Type help for a list of commands"
 
     prompt = '[dojo]>> '
 
@@ -176,11 +171,13 @@ class TheDojo(cmd.Cmd):
             self.dojo.print_unallocated('-o')
         else:
             self.dojo.print_unallocated()
-
-    def do_quit(self):
+            
+    
+    def do_quit(self, args):
         """Quits the_dojo"""
         print(colored("Thank you for using the_dojo. Goodbye!", 'yellow'))
         exit()
 
 if __name__ == '__main__':
+    print(colored(__doc__, 'yellow'))
     TheDojo().cmdloop()
