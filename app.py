@@ -3,7 +3,7 @@ import sys
 
 from termcolor import colored
 from docopt import docopt, DocoptExit
-from source.dojo import Dojo
+from src.dojo import Dojo
 
 
 """
@@ -86,36 +86,39 @@ class TheDojo(cmd.Cmd):
             second_name             Second name of the person to be added
             wants_accommodation     Whether person wants accommodation or not. [default: N]
         """
-        person_name = '{} {}'.format(args['<first_name>'], \
-                                    args['<second_name>'])
-        if args['<person_type>'].lower() == 'staff' \
-                                and args['<wants_accommodation>'] is not None:
-            print(colored("Staff cannot be allocated living spaces", 'red'))
-        elif args['<person_type>'].lower() == 'staff' \
-                                    and args['<wants_accommodation>'] is None:
-            self.dojo.add_person(person_name, args['<person_type>'])
-        elif args['<person_type>'].lower() == 'fellow' \
-                                    and args['<wants_accommodation>'] is None:
-            self.dojo.add_person(person_name, args['<person_type>'])
-        elif args['<person_type>'].lower() == 'fellow' \
-                                    and args['<wants_accommodation>'] == 'Y':
-            self.dojo.add_person(person_name, args['<person_type>'], \
-                                                args['<wants_accommodation>'])
-        elif args['<person_type>'].lower() == 'fellow' \
-                                    and args['<wants_accommodation>'] == 'y':
-            self.dojo.add_person(person_name, args['<person_type>'], \
-                                                args['<wants_accommodation>'])
-        elif args['<person_type>'].lower() == 'fellow' \
-                                    and args['<wants_accommodation>'] == 'N':
-            self.dojo.add_person(person_name, args['<person_type>'], \
-                                                args['<wants_accommodation>'])
-        elif args['<person_type>'].lower() == 'fellow' \
-                                    and args['<wants_accommodation>'] == 'n':
-            self.dojo.add_person(person_name, args['<person_type>'], \
-                                                args['<wants_accommodation>'])
+        if args['<first_name>'].isalpha() and args['<second_name>'].isalpha():
+            person_name = '{} {}'.format(args['<first_name>'], \
+                                        args['<second_name>'])
+            if args['<person_type>'].lower() == 'staff' \
+                                    and args['<wants_accommodation>'] is not None:
+                print(colored("Staff cannot be allocated living spaces", 'red'))
+            elif args['<person_type>'].lower() == 'staff' \
+                                        and args['<wants_accommodation>'] is None:
+                self.dojo.add_person(person_name, args['<person_type>'])
+            elif args['<person_type>'].lower() == 'fellow' \
+                                        and args['<wants_accommodation>'] is None:
+                self.dojo.add_person(person_name, args['<person_type>'])
+            elif args['<person_type>'].lower() == 'fellow' \
+                                        and args['<wants_accommodation>'] == 'Y':
+                self.dojo.add_person(person_name, args['<person_type>'], \
+                                                    args['<wants_accommodation>'])
+            elif args['<person_type>'].lower() == 'fellow' \
+                                        and args['<wants_accommodation>'] == 'y':
+                self.dojo.add_person(person_name, args['<person_type>'], \
+                                                    args['<wants_accommodation>'])
+            elif args['<person_type>'].lower() == 'fellow' \
+                                        and args['<wants_accommodation>'] == 'N':
+                self.dojo.add_person(person_name, args['<person_type>'], \
+                                                    args['<wants_accommodation>'])
+            elif args['<person_type>'].lower() == 'fellow' \
+                                        and args['<wants_accommodation>'] == 'n':
+                self.dojo.add_person(person_name, args['<person_type>'], \
+                                                    args['<wants_accommodation>'])
+            else:
+                print(colored("Wrong inputs entered." \
+                                    + "Type 'help add_person' for help", 'red'))
         else:
-            print(colored("Wrong inputs entered." \
-                                + "Type 'help add_person' for help", 'red'))
+            print(colored("Person name can only contain aplhabets. Please try again", 'red'))
 
 
     @the_dojo_docopt
@@ -130,7 +133,11 @@ class TheDojo(cmd.Cmd):
         if args['<room_type>'].lower() == 'office' or args['<room_type>']\
                                                         .lower() == 'living':
             for name in args['<room_name>']:
-                self.dojo.create_room(args['<room_type>'], name)
+                if name.isalpha():
+                    self.dojo.create_room(args['<room_type>'], name)
+                else:
+                    print(colored("Room "+name+" not created. Ensure that "\
+                            +"it only contains alphabets", 'red'))
         else:
             print(colored("Wrong room type entered", 'red'))
 
