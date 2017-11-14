@@ -116,6 +116,9 @@ class DojoTest(unittest.TestCase):
             'blue': ['Joy', 'Irene']
         }
         self.assertTrue(self.dojo.check_available_space(dict_a, 3))
+    
+    # Tests for reallocate person
+    
    
 
 if __name__ == '__main__':

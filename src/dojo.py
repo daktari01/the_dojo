@@ -194,6 +194,10 @@ class Dojo:
             print(colored("The result has been" \
                         + "written to file unallocated.txt", 'yellow'))
 
+    def reallocate_person(self, person_name, new_room):
+        """Moves a person from one room to another"""
+        pass
+
     
     def write_dict_to_file(self, dict_to_read, write_file):
         """Writes dictionary to file"""
@@ -203,4 +207,12 @@ class Dojo:
             fo.write(str(key).upper() + '\n'+'-------------------------------'\
                                         +'\n' + str(', '.join(value)) + '\n\n')
         fo.close()
+
+    def check_person_in_room(self, person_name, room_dict):
+        """Checks whether a person has an office or a living space"""
+        for name_list in room_dict.values():
+            for name in name_list:
+                if person_name == name:
+                    return True
+                return False
                         
