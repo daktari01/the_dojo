@@ -42,7 +42,7 @@ dict_b = {
 }
 
 #person_name = 'Liliosa'
-
+'''
 def check_person_in_room(person_name, room_dict):
     for room_name, name_list in room_dict.items():
         for name in name_list:
@@ -50,6 +50,14 @@ def check_person_in_room(person_name, room_dict):
                 return room_name
             return False
 
-print(check_person_in_room('Liliosa', dict_a))
+print(check_person_in_room('Liliosa', dict_b))
+'''
+def check_which_room_person_is(person_name, room_dict):
+    for room_name, name_list in room_dict.items():
+        if person_name in name_list:
+            return room_name
+        return False
+        
+print(check_which_room_person_is('Liliosa', dict_b))
         
 #def get_person_current_room()
