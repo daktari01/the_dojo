@@ -213,21 +213,28 @@ class Dojo:
                     != new_room:
                     if new_room in self.all_offices:
                         if self.room_has_space(self.dict_offices[new_room], 6) is True:
-                            current_room = self.check_which_room_person_is(person_name, self.dict_offices)
-                            self.dict_offices[current_room].remove(person_name)
-                            self.dict_offices[new_room].append(person_name)
-                            print(colored(person_name + " successfully reallocated to " + new_room, 'green'))
+                            try:
+                                current_room = self.check_which_room_person_is(person_name, self.dict_offices)
+                                self.dict_offices[current_room].remove(person_name)
+                                self.dict_offices[new_room].append(person_name)
+                                print(colored(person_name + " successfully reallocated to " + new_room, 'green'))
+                            except:
+                                print(colored(current_room + " must be an office for reallocation to occur.", 'red'))
                         else:
                             print(colored(new_room + " is full. Please try again"))
                     elif new_room in self.all_livings:
                         if self.room_has_space(self.dict_livings[new_room], 4) is True:
-                            current_room = self.check_which_room_person_is(person_name, self.dict_livings)
-                            self.dict_livings[current_room].remove(person_name)
-                            self.dict_livings[new_room].append(person_name)
-                            print(colored(person_name + " successfully reallocated to " + new_room, 'green'))
+                            try:
+                                current_room = self.check_which_room_person_is(person_name, self.dict_livings)
+                                self.dict_livings[current_room].remove(person_name)
+                                self.dict_livings[new_room].append(person_name)
+                                print(colored(person_name + " successfully reallocated to " + new_room, 'green'))
+                            except:
+                                print(colored(current_room + " must be a living space for reallocation to occur.", 'red'))
                         else:
                             print(colored(new_room + " is full. Please try again"))
-                        
+                    else:
+                        print(colored(new_room + " does not exist in the system. Create it first.", 'red'))
                 else:
                     print(colored("A person cannot be reallocated to the same room. "\
                                             +"Please select a different room", 'red'))
