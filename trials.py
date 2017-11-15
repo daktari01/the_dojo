@@ -32,7 +32,38 @@ print(check_available_space(dict_b, 3)) #True
 #pairs = { 'word1':0, 'word2':0, 'word3':2000, 'word4':64, 'word5':0, 'wordn':8 }
 #print(any(v > 0 for v in pairs.values()))
 '''
+dict_a = {
+    'Mandela': ['David', 'Samuel', 'Turi'],
+    'Machel':['Anne', 'Linet', 'Turi']
+}
+dict_b = {
+    'Nyerere': ['Myles', 'Reginald', 'Booker'],
+    'Obote':['Memo', 'Liliosa']
+}
 
-print("Hello")
-a = str(print("Hello"))
-print(a)
+#person_name = 'Liliosa'
+
+def check_person_in_room(person_name, room_dict):
+    for room_name, name_list in room_dict.items():
+        for name in name_list:
+            if person_name == name:
+                return room_name
+        return False
+
+print(check_person_in_room('Liliosa', dict_b))
+
+def check_which_room_person_is(person_name, room_dict):
+    for room_name, name_list in room_dict.items():
+        if person_name in name_list:
+            return room_name
+    return False
+        
+print(check_which_room_person_is('Liliosa', dict_b))
+        
+#def get_person_current_room()
+def room_has_space(self, capacity):
+    pass
+
+office1 = ['Juja', 'Njoro', 'Ruiru']
+
+print(len(office1))

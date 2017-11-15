@@ -116,7 +116,7 @@ class DojoTest(unittest.TestCase):
             'blue': ['Joy', 'Irene']
         }
         self.assertTrue(self.dojo.check_available_space(dict_a, 3))
-   
+ 
 
 if __name__ == '__main__':
     unittest.main(exit=False)

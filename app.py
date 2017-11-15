@@ -5,6 +5,7 @@ Usage:
     print_room <room_name>
     print_allocations [-o=filename]
     print_unallocated [-o=filename]
+    reallocate_person <person_identifier> <new_room_name>
     
 Options:
     room_type               Type of room, either office or living space.
@@ -171,6 +172,18 @@ class TheDojo(cmd.Cmd):
             self.dojo.print_unallocated('-o')
         else:
             self.dojo.print_unallocated()
+
+    @the_dojo_docopt
+    def do_reallocate_person(self, args):
+        """
+        Usage: reallocate_person <first_name> <second_name> <new_room_name>
+
+        Options:
+        new_room_name               Name of the room to transfer person to.
+        """
+        person_name = '{} {}'.format(args['<first_name>'], \
+                                        args['<second_name>'])
+        self.dojo.reallocate_person(person_name, args['<new_room_name>'])
             
     
     def do_quit(self, args):
@@ -179,5 +192,5 @@ class TheDojo(cmd.Cmd):
         exit()
 
 if __name__ == '__main__':
-    print(colored(__doc__, 'yellow'))
+    print(colored(__doc__, 'cyan'))
     TheDojo().cmdloop()
