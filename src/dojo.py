@@ -284,6 +284,21 @@ class Dojo:
             return True
         return False
 
+    def room_is_empty(self, room_name):
+        """Tests whether the room is empty"""
+        if room_name in self.all_offices:
+            if len(self.dict_offices[room_name]) == 0:
+                return True
+            else:
+                return False
+        elif room_name in self.all_livings:
+            if len(self.dict_livings[room_name]) == 0:
+                return True
+            else:
+                return False
+        else:
+            return False
+
     
 
     
