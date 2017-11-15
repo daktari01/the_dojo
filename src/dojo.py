@@ -150,12 +150,15 @@ class Dojo:
         global all_offices
         global dict_livings
         
-        if room_name in self.all_offices:
-            print(', '.join(self.dict_offices[room_name]))
-        elif room_name in self.all_livings:
-            print(', '.join(self.dict_livings[room_name]))
+        if self.room_is_empty(room_name) is False:
+            if room_name in self.all_offices:
+                print(', '.join(self.dict_offices[room_name]))
+            elif room_name in self.all_livings:
+                print(', '.join(self.dict_livings[room_name]))
+            else:
+                print(colored("The room does not exist. Please enter an existing one", 'red'))
         else:
-            print(colored("The room does not exist. Please enter an existing one", 'red'))
+            print(colored("This room is empty", 'yellow'))
         
     
     def print_allocations(self, print_rooms=None):
@@ -213,7 +216,7 @@ class Dojo:
                             current_room = self.check_which_room_person_is(person_name, self.dict_offices)
                             self.dict_offices[current_room].remove(person_name)
                             self.dict_offices[new_room].append(person_name)
-                            print(colored(person_name + " successfully reallocated to " + new_room, 'yellow'))
+                            print(colored(person_name + " successfully reallocated to " + new_room, 'green'))
                         else:
                             print(colored(new_room + " is full. Please try again"))
                     elif new_room in self.all_livings:
@@ -221,7 +224,7 @@ class Dojo:
                             current_room = self.check_which_room_person_is(person_name, self.dict_livings)
                             self.dict_livings[current_room].remove(person_name)
                             self.dict_livings[new_room].append(person_name)
-                            print(colored(person_name + " successfully reallocated to " + new_room, 'yellow'))
+                            print(colored(person_name + " successfully reallocated to " + new_room, 'green'))
                         else:
                             print(colored(new_room + " is full. Please try again"))
                         
@@ -256,6 +259,12 @@ class Dojo:
     def room_has_space(self, room_name, capacity):
         """Checks whether a single room has space"""
         if len(room_name) < capacity:
+            return True
+        return False
+
+    def room_is_empty(self, room_name):
+        """Checks whether a single is empty"""
+        if len(room_name) == 0:
             return True
         return False
 
