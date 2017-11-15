@@ -107,7 +107,7 @@ However, one may only rellocated from office to office and living room to living
 __Examples__    
 * `reallocate_person Harry Winks Machel`   
 If Harry Winks had been previously allocated office Mandela, the above command moves him from office Mandela to office Machel.   
-* `reallocate_person John Doe Freedom`
+* `reallocate_person John Doe Freedom`    
 If John Doe had been previously allocated living room Longonot, the above command moves him from living room Longonot to living room Freedom.   
 
 9. __To add people from a text file to the program, run:__   
