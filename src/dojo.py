@@ -98,7 +98,7 @@ class Dojo:
                                 + " has been added as a Fellow", 'yellow'))
                 print(colored("There is no available office to add " + person_name \
                                         + ". Create one first", 'red'))
-                self.unallocated_people.append(person_name)
+                self.unallocated_people.append(person_name + " - lacks office space")
 
             # Check if any living space has space
             if wants_accommodation == 'Y' or wants_accommodation == 'y':
@@ -114,7 +114,7 @@ class Dojo:
                     self.all_fellows.append(person_name)
                     print(colored("There is no available living space to add " \
                                 + person_name + ". Create one first", 'red'))
-                    self.unallocated_people.append(person_name)
+                    self.unallocated_people.append(person_name + " - lacks living space")
 
         elif person_type.upper() == 'STAFF':
             for staff in self.all_staff:
@@ -138,7 +138,7 @@ class Dojo:
                 print(colored(person_name + " has been added as a Staff", 'yellow'))
                 print(colored("There is no available office to add " \
                             + person_name + ". Create one first", 'red'))
-                self.unallocated_people.append(person_name)
+                self.unallocated_people.append(person_name + " - lacks office space")
 
         else:
             print(colored("Wrong person type entered. Please try again", 'red'))
@@ -151,9 +151,15 @@ class Dojo:
         global dict_livings
         
         if room_name in self.all_offices:
-            print(', '.join(self.dict_offices[room_name]))
+            if len(self.dict_offices[room_name]) != 0:
+                print(', '.join(self.dict_offices[room_name]))
+            else:
+                print(colored("Office " + room_name + " is empty.", 'yellow'))
         elif room_name in self.all_livings:
-            print(', '.join(self.dict_livings[room_name]))
+            if len(self.dict_livings[room_name]) != 0:
+                print(', '.join(self.dict_livings[room_name]))
+            else:
+                print(colored("Living space " + room_name + " is empty.", 'yellow'))
         else:
             print(colored("The room does not exist. Please enter an existing one", 'red'))
         
@@ -181,20 +187,81 @@ class Dojo:
     
     def print_unallocated(self, print_pple=None):
         """Prints list of unallocated people"""
-        if print_pple is None:
-            for unallocated in self.unallocated_people:
-                print(unallocated + "\n")
-        
-        else: 
-            # Write to file
-            unallocated_file = open('./files/unallocated.txt', 'w')
-            for unallocated in self.unallocated_people:
-                unallocated_file.write(unallocated + "\n")
-            unallocated_file.close()
-            print(colored("The result has been" \
-                        + "written to file unallocated.txt", 'yellow'))
+        if len(self.unallocated_people) > 0:
+            if print_pple is None:  
+                for unallocated in self.unallocated_people:
+                    print(unallocated + "\n")
+            
+            else: 
+                # Write to file
+                unallocated_file = open('./files/unallocated.txt', 'w')
+                for unallocated in self.unallocated_people:
+                    unallocated_file.write(unallocated + "\n")
+                unallocated_file.close()
+                print(colored("The result has been" \
+                            + "written to file unallocated.txt", 'yellow'))
+        else:
+            print(colored("There are no unallocated people.", 'yellow'))
 
-    
+    def reallocate_person(self, person_name, new_room):
+        """Moves a person from one room to another"""
+        global dict_offices 
+        global dict_livings
+        global all_offices
+        global all_livings
+        
+        if new_room in self.all_offices or new_room in self.all_livings:
+            if self.check_which_room_person_is(person_name, self.dict_offices) or \
+                self.check_which_room_person_is(person_name, self.dict_livings)\
+                         is not False:
+                if self.check_which_room_person_is(person_name, self.dict_offices) \
+                    or self.check_which_room_person_is(person_name, self.dict_livings) \
+                    != new_room:
+                    if new_room in self.all_offices:
+                        if self.room_has_space(self.dict_offices[new_room], 6) is True:
+                            try:
+                                current_room = self.check_which_room_person_is(person_name, self.dict_offices)
+                                self.dict_offices[current_room].remove(person_name)
+                                self.dict_offices[new_room].append(person_name)
+                                print(colored(person_name + " successfully reallocated to " + new_room, 'green'))
+                            except:
+                                print(colored(current_room + " must be an office for reallocation to occur.", 'red'))
+                        else:
+                            print(colored(new_room + " is full. Please try again"))
+                    elif new_room in self.all_livings:
+                        if self.room_has_space(self.dict_livings[new_room], 4) is True:
+                            try:
+                                current_room = self.check_which_room_person_is(person_name, self.dict_livings)
+                                self.dict_livings[current_room].remove(person_name)
+                                self.dict_livings[new_room].append(person_name)
+                                print(colored(person_name + " successfully reallocated to " + new_room, 'green'))
+                            except:
+                                print(colored(current_room + " must be a living space for reallocation to occur.", 'red'))
+                        else:
+                            print(colored(new_room + " is full. Please try again"))
+                    else:
+                        print(colored(new_room + " does not exist in the system. Create it first.", 'red'))
+                else:
+                    print(colored("A person cannot be reallocated to the same room. "\
+                                            +"Please select a different room", 'red'))
+            else:
+                print(colored(person_name + " does not exist in any of the "\
+                    +"rooms. Reallocation is only done for persons with a "\
+                    +"room already", 'red'))
+        else:
+            print(colored(new_room + " does not exist. "\
+                +"You can only reallocate a person to an existing room", 'red'))
+
+    def load_people(self):
+        """Loads people from a text file"""
+        with open('./files/load_people.txt', 'r') as load_file:
+            for line in load_file:
+                line = line.split()
+                full_name = '{} {}'.format(line[0], line[1])
+                if len(line) == 4:
+                    self.add_person(full_name, line[2], line[3])
+                elif len(line) == 3:
+                    self.add_person(full_name, line[2])
     def write_dict_to_file(self, dict_to_read, write_file):
         """Writes dictionary to file"""
         fout = write_file
@@ -203,4 +270,35 @@ class Dojo:
             fo.write(str(key).upper() + '\n'+'-------------------------------'\
                                         +'\n' + str(', '.join(value)) + '\n\n')
         fo.close()
+
+
+    def check_which_room_person_is(self, person_name, room_dict):
+        for room_name, name_list in room_dict.items():
+            if person_name in name_list:
+                return room_name
+        return False
                         
+    def room_has_space(self, room_name, capacity):
+        """Checks whether a single room has space"""
+        if len(room_name) < capacity:
+            return True
+        return False
+
+    def room_is_empty(self, room_name):
+        """Tests whether the room is empty"""
+        if room_name in self.all_offices:
+            if len(self.dict_offices[room_name]) == 0:
+                return True
+            else:
+                return False
+        elif room_name in self.all_livings:
+            if len(self.dict_livings[room_name]) == 0:
+                return True
+            else:
+                return False
+        else:
+            return False
+
+    
+
+    
