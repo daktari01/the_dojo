@@ -6,6 +6,7 @@ Usage:
     print_allocations [-o=filename]
     print_unallocated [-o=filename]
     reallocate_person <person_identifier> <new_room_name>
+    load_people
     
 Options:
     room_type               Type of room, either office or living space.
@@ -184,7 +185,13 @@ class TheDojo(cmd.Cmd):
         person_name = '{} {}'.format(args['<first_name>'], \
                                         args['<second_name>'])
         self.dojo.reallocate_person(person_name, args['<new_room_name>'])
-            
+        
+    @the_dojo_docopt
+    def do_load_people(self, args):
+        """
+        Usage: load_people
+        """
+        self.dojo.load_people()
     
     def do_quit(self, args):
         """Quits the_dojo"""

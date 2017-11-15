@@ -246,7 +246,16 @@ class Dojo:
             print(colored(new_room + " does not exist. "\
                 +"You can only reallocate a person to an existing room", 'red'))
 
-    
+    def load_people(self):
+        """Loads people from a text file"""
+        with open('./files/load_people.txt', 'r') as load_file:
+            for line in load_file:
+                line = line.split()
+                full_name = '{} {}'.format(line[0], line[1])
+                if len(line) == 4:
+                    self.add_person(full_name, line[2], line[3])
+                elif len(line) == 3:
+                    self.add_person(full_name, line[2])
     def write_dict_to_file(self, dict_to_read, write_file):
         """Writes dictionary to file"""
         fout = write_file
