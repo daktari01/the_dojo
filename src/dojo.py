@@ -196,7 +196,45 @@ class Dojo:
 
     def reallocate_person(self, person_name, new_room):
         """Moves a person from one room to another"""
-        pass
+        global dict_offices 
+        global dict_livings
+        global all_offices
+        global all_livings
+        
+        if new_room in self.all_offices or new_room in self.all_livings:
+            if self.check_which_room_person_is(person_name, self.dict_offices) or \
+                self.check_which_room_person_is(person_name, self.dict_livings)\
+                         is not False:
+                if self.check_which_room_person_is(person_name, self.dict_offices) \
+                    or self.check_which_room_person_is(person_name, self.dict_livings) \
+                    != new_room:
+                    if new_room in self.all_offices:
+                        if self.room_has_space(self.dict_offices[new_room], 6) is True:
+                            current_room = self.check_which_room_person_is(person_name, self.dict_offices)
+                            self.dict_offices[current_room].remove(person_name)
+                            self.dict_offices[new_room].append(person_name)
+                            print(colored(person_name + " successfully reallocated to " + new_room, 'yellow'))
+                        else:
+                            print(colored(new_room + " is full. Please try again"))
+                    elif new_room in self.all_livings:
+                        if self.room_has_space(self.dict_livings[new_room], 4) is True:
+                            current_room = self.check_which_room_person_is(person_name, self.dict_livings)
+                            self.dict_livings[current_room].remove(person_name)
+                            self.dict_livings[new_room].append(person_name)
+                            print(colored(person_name + " successfully reallocated to " + new_room, 'yellow'))
+                        else:
+                            print(colored(new_room + " is full. Please try again"))
+                        
+                else:
+                    print(colored("A person cannot be reallocated to the same room. "\
+                                            +"Please select a different room", 'red'))
+            else:
+                print(colored(person_name + " does not exist in any of the "\
+                    +"rooms. Reallocation is only done for persons with a "\
+                    +"room already", 'red'))
+        else:
+            print(colored(new_room + " does not exist. "\
+                +"You can only reallocate a person to an existing room", 'red'))
 
     
     def write_dict_to_file(self, dict_to_read, write_file):
@@ -208,11 +246,17 @@ class Dojo:
                                         +'\n' + str(', '.join(value)) + '\n\n')
         fo.close()
 
-    def check_person_in_room(self, person_name, room_dict):
-        """Checks whether a person has an office or a living space"""
-        for name_list in room_dict.values():
-            for name in name_list:
-                if person_name == name:
-                    return True
-                return False
+
+    def check_which_room_person_is(self, person_name, room_dict):
+        for room_name, name_list in room_dict.items():
+            if person_name in name_list:
+                return room_name
+        return False
                         
+    def room_has_space(self, room_name, capacity):
+        """Checks whether a single room has space"""
+        if len(room_name) < capacity:
+            return True
+        return False
+
+    
