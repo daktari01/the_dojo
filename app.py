@@ -6,6 +6,7 @@ Usage:
     print_allocations [-o=filename]
     print_unallocated [-o=filename]
     reallocate_person <person_identifier> <new_room_name>
+    allocate_room <room_type> <first_name> <second_name>
     load_people
     
 Options:
