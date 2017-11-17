@@ -6,6 +6,7 @@ Usage:
     print_allocations [-o=filename]
     print_unallocated [-o=filename]
     reallocate_person <person_identifier> <new_room_name>
+    allocate_room <room_type> <first_name> <second_name>
     load_people
     
 Options:
@@ -37,8 +38,8 @@ def the_dojo_docopt(func):
         except DocoptExit as e:
             #The DocoptExit is thrown when the arguments do not match
             #A message to the user is printed and the usage
-            print("Invalid command!")
-            print(e)
+            print(colored("Invalid command!", 'red'))
+            print(colored(e, 'yellow'))
             return
         return func(self, option)
 
@@ -185,6 +186,15 @@ class TheDojo(cmd.Cmd):
         person_name = '{} {}'.format(args['<first_name>'], \
                                         args['<second_name>'])
         self.dojo.reallocate_person(person_name, args['<new_room_name>'])
+
+    @the_dojo_docopt
+    def do_allocate_room(self, args):
+        """
+        Usage: allocate_room <room_type> <first_name> <second_name>
+        """
+        person_name = '{} {}'.format(args['<first_name>'], \
+                                        args['<second_name>'])
+        self.dojo.allocate_room(person_name, args['<room_type>'])
         
     @the_dojo_docopt
     def do_load_people(self, args):

@@ -110,7 +110,17 @@ If Harry Winks had been previously allocated office Mandela, the above command m
 * `reallocate_person John Doe Freedom`    
 If John Doe had been previously allocated living room Longonot, the above command moves him from living room Longonot to living room Freedom.   
 
-9. __To add people from a text file to the program, run:__   
+9. __To allocate rooms to unallocated people, run:__    
+`allocate_room <room_type> <first_name> <second_name>`    
+One may want to assign the people who do not have rooms due to the rooms' unavailability, rooms, once they are available.    
+
+__Examples__
+* `allocate_room office Josiah Peters`    
+If Josiah Peters did not have an office before, he is allocated one that is available.    
+* `allocate_room living Lilian Joys`    
+If Lilian Joys had expressed interest to get accommodation but living spaces were unavailable, she is allocated one that is available.    
+
+10. __To add people from a text file to the program, run:__   
 `load_people`
 
 ### How To Contribute

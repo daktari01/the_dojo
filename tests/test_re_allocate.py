@@ -1,5 +1,15 @@
 import unittest
+import io
+import sys
+import re
 
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO
+from io import StringIO
+from src.room import Room, Office, LivingSpace
+from src.person import Person, Staff, Fellow
 from src.dojo import Dojo
 
 
@@ -42,4 +52,21 @@ class ReallocateTest(unittest.TestCase):
         self.dojo.add_person('Linda Masero', 'staff')
         self.assertFalse(self.dojo.room_is_empty('Sama'))
 
+    def test_allocate_room(self):
+        """Tests the allocate_room method"""
+        self.dojo.add_person('John Doe', 'staff')
+        self.dojo.add_person('Jane Duh', 'fellow', 'Y')
+        self.dojo.create_room('office', 'Mandela')
+        inital_count = len(self.dojo.unallocated_people)
+        self.dojo.allocate_room('John Doe', 'office')
+        current_count = len(self.dojo.unallocated_people)
+        self.assertEqual((inital_count - current_count), 1)
 
+    def test_allocate_missing_person(self):
+        """Tests that missing person cannot be allocated"""
+        self.dojo.create_room('living', 'Suswa')
+        self.dojo.allocate_room('Babu Brian', 'living')
+        output = "Living space Suswa created successfully"\
+            +"Babu Brian does not exist among the unallocated people"
+        self.assertEqual(re.sub(r'(\x9B|\x1B\[)[0-?]*[ -\/]*[@-~][\n]*', '', \
+                                                sys.stdout.getvalue()), output)

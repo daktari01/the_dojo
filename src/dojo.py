@@ -252,6 +252,40 @@ class Dojo:
             print(colored(new_room + " does not exist. "\
                 +"You can only reallocate a person to an existing room", 'red'))
 
+    def allocate_room(self, person_name, room_type):
+        """Allocates rooms to unallocated people"""
+        global dict_offices 
+        global dict_livings
+        global all_offices
+        global all_livings
+    
+        if (person_name + " - lacks " + room_type.lower() + " space") in self.unallocated_people:
+            for unallocated in self.unallocated_people:
+                unallocated_item = unallocated.split()
+                full_name = '{} {}'.format(unallocated_item[0], unallocated_item[1])
+                #if person_name == full_name and room_type.lower() == unallocated_item[4]:
+                if room_type == 'office':
+                    try:
+                        available_office = self.get_random_room(self.dict_offices, 6)
+                        self.dict_offices[available_office].append(person_name)
+                        print(colored(person_name + " has been allocated office " \
+                                                    + available_office, 'yellow'))
+                        self.unallocated_people.remove(unallocated)
+                    except:
+                        print(colored("There is no available office to allocate " + person_name, 'red'))
+                else: 
+                    try:
+                        available_living = self.get_random_room(self.dict_livings, 4)
+                        self.dict_livings[available_living].append(person_name)
+                        print(colored(person_name + " has been allocated living space " \
+                                                + available_living, 'yellow'))
+                        self.unallocated_people.remove(unallocated)
+                    except:
+                        print(colored("There is no available living space to allocate " + person_name, 'red'))
+                break
+        else:
+            print(colored(person_name + " does not exist among the unallocated people", 'red'))
+
     def load_people(self):
         """Loads people from a text file"""
         with open('./files/load_people.txt', 'r') as load_file:
@@ -262,6 +296,7 @@ class Dojo:
                     self.add_person(full_name, line[2], line[3])
                 elif len(line) == 3:
                     self.add_person(full_name, line[2])
+
     def write_dict_to_file(self, dict_to_read, write_file):
         """Writes dictionary to file"""
         fout = write_file
@@ -298,6 +333,8 @@ class Dojo:
                 return False
         else:
             return False
+
+    
 
     
 
